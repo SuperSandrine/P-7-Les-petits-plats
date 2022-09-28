@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <link href="./css/search.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <link rel="icon" type="image/svg" href="./assets/logo.svg" />
+    <link
+      href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/ba64d1ea0b.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Les petits plats - page de recherche</title>
+  </head>
+  <body>
+    <header>
+      <!-- logo -->
+      <h1>
+        <img
+          src="./assets/nameAndLogo.svg"
+          alt="Logo et titre : Les petits plats"
+        />
+      </h1>
+    </header>
+    <main>
+      <section id="search">
+        <div id="searchBar-container">
+          <input
+            id="searchBar"
+            type="text"
+            placeholder="Taper au moins 3 caractères pour lancer la rechercher"
+          />
+        </div>
+
+        <div id="tag-container">
+          <div id="advancedSelectedFilterTags-container"></div>
+          <div id="advancedFilters-container">
+            <ul id="machine-list">
+              <li class="machine">grille-pain</li>
+              <li class="machine">four</li>
+            </ul>
+            <ul id="tool-list">
+              <li class="tool">spoon</li>
+              <li class="tool">knife</li>
+            </ul>
+            <ul id="ingredients-list">
+              <li class="ingredients">egg</li>
+              <li class="ingredients">milk</li>
+            </ul>
+            <!-- Ce contenu devrait être créer dynamiquement avec js et la récupération 
+            des infos dans le fichier de données -->
+          </div>
+        </div>
+      </section>
+      <section id="searchResult-recipes">
+        <article class="card">
+          <img />
+          <div class="recipe-container">
+            <div>
+              <h2>titre recette</h2>
+              <p>90 min</p>
+            </div>
+            <div>
+              <ul>
+                <li>poulet: 1</li>
+                <li>oignon: 2</li>
+              </ul>
+              <p>
+                Description de la recette : Lorem ipsum dolor sit amet,
+                consectetur adipiscing elit. Etiam vulputate placerat molestie.
+                Pellentesque habitant morbi tristique senectus et netus et
+                malesuada fames ac turpis egestas. Donec in arcu a erat pharetra
+                blandit. Praesent sollicitudin lacus non eros egestas placerat.
+                Ut volutpat nibh ut iaculis sollicitudin.
+              </p>
+            </div>
+          </div>
+        </article>
+        <!-- Ce contenu devrait s'afficher dynamiquement  -->
+      </section>
+    </main>
+    <footer></footer>
+    <script></script>
+    <!-- <script type="module" src="./scripts/utils/contactForm.js"></script> -->
+  </body>
+</html>

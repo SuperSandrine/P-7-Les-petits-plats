@@ -5,8 +5,14 @@
     <meta charset="utf-8" />
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
     <link rel="icon" type="image/svg" href="./assets/logo.svg" />
-    <link
+    <!-- <link
       href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    /> -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Lato:wght@400;700&family=Roboto&display=swap"
       rel="stylesheet"
     />
     <script
@@ -33,18 +39,37 @@
             type="text"
             placeholder="Taper au moins 3 caractères pour lancer la rechercher"
           />
+          <i class="fas fa-search"></i>
         </div>
 
         <div id="tag-container">
-          <div id="advancedSelectedFilterTags-container"></div>
+          <div id="advancedSelectedFilterTags-container">
+            <div class="advancedSelectedFilterTag ingredient-color">
+              <p>chochochocolat</p>
+              <i class="far fa-times-circle"></i>
+            </div>
+            <div class="advancedSelectedFilterTag ingredient-color">
+              chochochocolat
+            </div>
+            <div class="advancedSelectedFilterTag machine-color">
+              chochochocolat
+            </div>
+            <div class="advancedSelectedFilterTag machine-color">
+              chochochocolat
+            </div>
+            <div class="advancedSelectedFilterTag machine-color">
+              chochochocolat
+            </div>
+          </div>
+
           <div id="advancedFilters-container">
             <ul id="machine-list">
-              <li class="machine">grille-pain</li>
-              <li class="machine">four</li>
+              <li class="machine list">grille-pain</li>
+              <li class="machine list">four</li>
             </ul>
             <ul id="tool-list">
-              <li class="tool">spoon</li>
-              <li class="tool">knife</li>
+              <li class="tool list">spoon</li>
+              <li class="tool list">knife</li>
             </ul>
             <ul id="ingredients-list">
               <li class="ingredients">egg</li>
@@ -55,17 +80,18 @@
           </div>
         </div>
       </section>
-      <section id="searchResult-recipes">
-        <article class="card">
-          <img />
-          <div class="recipe-container">
-            <div>
+
+      <section id="resultRecipes-container">
+        <article class="recipe-card">
+          <div class="img"></div>
+          <div class="recipeText-container">
+            <div class="recipeHeader">
               <h2>titre recette</h2>
-              <p>90 min</p>
+              <p><i class="far fa-clock"></i> 90 min</p>
             </div>
-            <div>
+            <div class="recipeListAndDescription">
               <ul>
-                <li>poulet: 1</li>
+                <li><strong>poulet:</strong> 1</li>
                 <li>oignon: 2</li>
               </ul>
               <p>

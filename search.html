@@ -3,7 +3,7 @@
   <head>
     <link href="./css/search.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg" href="./assets/logo.svg" />
     <!-- <link
       href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
@@ -36,9 +36,9 @@
         <div id="searchBar-container">
           <input
             id="searchBar"
-            type="text"
+            type="search"
             placeholder="Taper au moins 3 caractères pour lancer la rechercher"
-          />
+          ></input>
           <i class="fas fa-search"></i>
         </div>
 
@@ -48,32 +48,87 @@
               <p>chochochocolat</p>
               <i class="far fa-times-circle"></i>
             </div>
-            <div class="advancedSelectedFilterTag ingredient-color">
-              chochochocolat
-            </div>
-            <div class="advancedSelectedFilterTag machine-color">
-              chochochocolat
-            </div>
-            <div class="advancedSelectedFilterTag machine-color">
-              chochochocolat
-            </div>
-            <div class="advancedSelectedFilterTag machine-color">
-              chochochocolat
-            </div>
           </div>
 
           <div id="advancedFilters-container">
-            <ul id="machine-list">
-              <li class="machine list">grille-pain</li>
-              <li class="machine list">four</li>
-            </ul>
-            <ul id="tool-list">
-              <li class="tool list">spoon</li>
-              <li class="tool list">knife</li>
-            </ul>
-            <ul id="ingredients-list">
-              <li class="ingredients">egg</li>
-              <li class="ingredients">milk</li>
+            <ul id="advancedFilters-list">
+              <li class="advancedFilters">
+                <div class="advancedFilters-button machine-color">
+                  <span>Appareils</span>
+                  <input
+                    type="search"
+                    id="search-appareils"
+                    placeholder="Recherche appareils"
+                    class="machine-color"
+                  ></input>
+                </div>
+
+                <ul class="machine-color" id="machines-list">
+                  <li class="machine list">
+                    <button>grille-pain poulu</button>
+                  </li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                </ul>
+              </li>
+
+              <li class="advancedFilters">
+                <div class="advancedFilters-button tool-color">
+                  <span>Ustensibles</span>
+                  <input
+                    type="search"
+                    id="search-tools"
+                    placeholder="Recherche ustensibles"
+                    class="tool-color"
+                  ></input>
+                </div>
+
+                <ul class="tool-color" id="tools-list">
+                  <li class="machine list">
+                    <button>grille-pain poulu</button>
+                  </li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                </ul>
+              </li>
+
+              <li class="advancedFilters">
+                <div class="advancedFilters-button ingredient-color">
+                  <span>Ingredients</span>
+                  <input
+                    type="search"
+                    id="search-ingredient"
+                    placeholder="Recherche ingrédient"
+                    class="ingredient-color"
+                  ></input>
+                </div>
+
+                <ul class="ingredient-color" id="ingredients-list">
+                  <li class="machine list">
+                    <button>grille-pain poulu</button>
+                  </li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                  <li class="machine list"><button>grille-pain</button></li>
+                  <li class="machine list"><button>four</button></li>
+                </ul>
+              </li>
             </ul>
             <!-- Ce contenu devrait être créer dynamiquement avec js et la récupération 
             des infos dans le fichier de données -->
@@ -85,16 +140,16 @@
         <article class="recipe-card">
           <div class="img"></div>
           <div class="recipeText-container">
-            <div class="recipeHeader">
-              <h2>titre recette</h2>
+            <div class="recipeText-header">
+              <h2>Titre recette</h2>
               <p><i class="far fa-clock"></i> 90 min</p>
             </div>
-            <div class="recipeListAndDescription">
+            <div class="recipeText-listAndDescription">
               <ul>
                 <li><strong>poulet:</strong> 1</li>
                 <li>oignon: 2</li>
               </ul>
-              <p>
+              <p class="recipeText-description">
                 Description de la recette : Lorem ipsum dolor sit amet,
                 consectetur adipiscing elit. Etiam vulputate placerat molestie.
                 Pellentesque habitant morbi tristique senectus et netus et
@@ -109,7 +164,8 @@
       </section>
     </main>
     <footer></footer>
-    <script></script>
+    <script type="module" src="./scripts/search.js"></script>
+    <script type="module" src="./data/recipes.js"></script>
     <!-- <script type="module" src="./scripts/utils/contactForm.js"></script> -->
   </body>
 </html>

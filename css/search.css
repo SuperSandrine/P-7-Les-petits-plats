@@ -9,6 +9,11 @@
 body {
   padding: 30px 100px;
 }
+@media screen and (max-width: 600px) {
+  body {
+    padding: 30px;
+  }
+}
 
 /* --------- Header page --------- */
 
@@ -59,6 +64,7 @@ header {
   justify-content: flex-start;
   align-items: center;
   gap: 10px 15px;
+  padding-bottom: 15px;
 }
 
 .advancedSelectedFilterTag {
@@ -81,9 +87,154 @@ header {
 /* --------- Search menu --------- */
 
 #advancedFilters-container {
+  /* display: flex; */
+  /* justify-content: flex-start;
+  position: relative;*/
+  /* position: relative;
+  height: 90px;
+  width: 100%; */
+  padding-bottom: 25px;
+}
+
+#advancedFilters-list {
   display: flex;
+  gap: 10px;
   justify-content: flex-start;
+}
+@media screen and (max-width: 600px) {
+  #advancedFilters-list {
+    flex-direction: column;
+  }
+}
+.advancedFilters {
+  /* display: inline-block; */
   position: relative;
+}
+
+.advancedFilters-button {
+  color: white;
+  padding: 23px 60px 23px 20px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  text-align: left;
+  /* position: relative; */
+}
+@media screen and (max-width: 600px) {
+  .advancedFilters-button {
+    width: 100%;
+  }
+}
+.advancedFilters span {
+  line-height: 22px;
+}
+.advancedFilters input {
+  display: none;
+  border: none;
+  /* padding: 25px; */
+  /* border-radius: 5px; */
+  /* z-index: 4; */
+  /* position: absolute; */
+  color: rgba(255, 255, 255, 0.677);
+  left: 0;
+  min-width: calc(100vw - (200px + 440px));
+  padding: 0;
+}
+.advancedFilters input::placeholder {
+  color: rgba(255, 255, 255, 0.677);
+  font-weight: 400;
+  width: fit-content;
+}
+
+#machines-list,
+#tools-list,
+#ingredients-list {
+  display: none;
+  position: absolute;
+  /* padding: 20px; */
+  top: 65px; /* placer en absolu, le container se cale
+  juste dessous son relative grâce à inline-block*/
+  box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  color: white;
+  width: 100%;
+  /* width: 60vw; */
+  /* grid-template-columns: 1fr 1fr 1fr; */
+  flex-wrap: wrap;
+  /* column-gap: 20px; */
+  row-gap: 7px;
+  border-radius: 0 0 5px 5px;
+  padding: 10px 20px;
+  justify-content: space-between;
+}
+.list {
+  text-decoration: none;
+  list-style: none;
+  padding: 2px;
+  width: 30%;
+}
+@media screen and (max-width: 900px) {
+  .list {
+    width: 47%;
+  }
+}
+@media screen and (max-width: 400px) {
+  .list {
+    width: 100%;
+  }
+}
+
+.list button {
+  background-color: transparent;
+  text-align: left;
+  border: none;
+  color: white;
+  /* display: flex; */
+  padding: 0;
+  /* line-height: 18px; */
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#machines-list li:hover,
+#tools-list li:hover,
+#ingredients-list li:hover {
+  background-color: rgba(255, 255, 255, 0.306);
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.advancedFilters:hover #machines-list,
+.advancedFilters:hover #tools-list,
+.advancedFilters:hover #ingredients-list {
+  display: flex;
+}
+
+.advancedFilters:hover input {
+  display: block;
+}
+
+.advancedFilters-button:after {
+  position: absolute;
+  content: "";
+  top: 28px;
+  right: 20px;
+  width: 16px;
+  height: 11px;
+  background: url(../assets/uparrow.svg);
+  transform: none;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.advancedFilters:hover .advancedFilters-button:after {
+  transform: rotate(180deg);
+  z-index: 5;
+}
+.advancedFilters:hover .advancedFilters-button span {
+  display: none;
 }
 
 /* --------- Result Recipes section --------- */
@@ -126,28 +277,28 @@ header {
   border-radius: 0 0 5px 5px;
 }
 
-.recipeHeader {
+.recipeText-header {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
 }
-.recipeHeader p {
+.recipeText-header p {
   font-weight: 700;
 }
 
-.recipeListAndDescription {
+.recipeText-listAndDescription {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   font-size: 12px;
   font-weight: 400;
 }
-.recipeListAndDescription ul {
+.recipeText-listAndDescription ul {
   white-space: nowrap;
 }
-.recipeListAndDescription ul strong {
+.recipeText-listAndDescription ul strong {
   font-weight: 700;
 }
-.recipeListAndDescription p {
+.recipeText-listAndDescription p {
   font-family: "roboto", sans-serif;
 }

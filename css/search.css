@@ -9,6 +9,10 @@
 body {
   padding: 30px 100px;
 }
+@media screen and (max-width: 900px) {
+  body {
+    padding: 30px 50px;
+  }
 @media screen and (max-width: 600px) {
   body {
     padding: 30px;
@@ -284,6 +288,8 @@ header {
 }
 .recipeText-header p {
   font-weight: 700;
+  white-space: nowrap;
+  padding-left: 15px;
 }
 
 .recipeText-listAndDescription {
@@ -294,11 +300,13 @@ header {
   font-weight: 400;
 }
 .recipeText-listAndDescription ul {
-  white-space: nowrap;
+  width: 45%;
+  white-space: wrap;
 }
 .recipeText-listAndDescription ul strong {
   font-weight: 700;
 }
 .recipeText-listAndDescription p {
   font-family: "roboto", sans-serif;
+  width: 55%;
 }

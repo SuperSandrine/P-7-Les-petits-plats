@@ -5,7 +5,7 @@ import { filterThroughInput , actionsOnInputSearch } from './Utils/filters.js'
 const mainInput = document.getElementById('searchBar')
 const recipesContainer = document.getElementById('resultRecipes-container')
 
-
+// PLAN:
 // 1 - récupérer les données avec fetch : pour se faire, il 
 // faudrait changer le fichier .js en .json, peu d'intérêt.
 //async function getRecipesDatas () {
@@ -27,16 +27,16 @@ const recipesContainer = document.getElementById('resultRecipes-container')
   //  return { recipes }
 //  }
 
+// OK= import/export 2 - Passer les données à une variable, variable:recipes
 
-// OK= import/export 2 - Passer les données à une variable 
-
-// 3 - Créer une fonction d'affichage (méthode MAP) Si je map en direct, plutôt
+// 3 - Créer une fonction d'affichage (méthode MAP testée: Si je map en direct, plutôt
 // que appendChild, plus besoin de vider la gallerie, la gallerie 
-// affichera directement l'array mapé
+// affichera directement l'array mapé, mais du coup c'est en surchargeant la fonction display
+// loin de la factory method
 
 // 4 - Récupérer ce qui est tapé dans l'input et filtrer (avant le map)
 
-// 3 - Gérer les filtre
+// 5 - Gérer les filtre
 
 console.log(recipes)
 
@@ -103,10 +103,9 @@ function init(){
 }
 init()
 
+
 mainInput.addEventListener('input', (insideInput) =>{
-    
   //    console.log(e.target.value)
-  
   displayRecipes(filterThroughInput(insideInput, recipes))
   
   })

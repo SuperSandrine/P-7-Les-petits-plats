@@ -41,10 +41,9 @@
           />
           <i class="fas fa-search"></i>
         </div>
-
         <div id="tag-container">
           <div id="advancedSelectedFilterTags-container">
-            <div class="advancedSelectedFilterTag ingredient-color">
+            <div class="advancedSelectedFilterTag ingredients-color">
               <p>chochochocolat</p>
               <i class="far fa-times-circle"></i>
             </div>
@@ -52,7 +51,7 @@
 
           <div id="advancedFilters-container">
             <ul id="advancedFilters-list">
-              <li class="advancedFilters">
+              <!-- <li class="advancedFilters">
                 <div class="advancedFilters-button machine-color">
                   <span>Appareils</span>
                   <input
@@ -62,12 +61,11 @@
                     class="machine-color"
                   />
                 </div>
-
                 <ul class="machine-color" id="machines-list">
-                  <li class="machine list">
+                  <li class="machine">
                     <button>grille-pain poulu</button>
                   </li>
-                  <li class="machine list"><button>four</button></li>
+                  <li class="list"><button>four</button></li>
                   <li class="machine list"><button>grille-pain</button></li>
                   <li class="machine list"><button>four</button></li>
                   <li class="machine list"><button>grille-pain</button></li>
@@ -128,7 +126,7 @@
                   <li class="machine list"><button>grille-pain</button></li>
                   <li class="machine list"><button>four</button></li>
                 </ul>
-              </li>
+              </li> -->
             </ul>
             <!-- Ce contenu devrait être créer dynamiquement avec js et la récupération 
             des infos dans le fichier de données -->
@@ -136,6 +134,12 @@
         </div>
       </section>
 
+      <div id="noResults">
+        <p>
+          Aucune recette ne correspond à votre critère... Vous pouvez chercher «
+          tarte aux pommes », « poisson », etc
+        </p>
+      </div>
       <section id="resultRecipes-container">
         <!-- <article class="recipe-card">
           <div class="img"></div>

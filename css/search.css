@@ -30,13 +30,13 @@ header {
 
 /* --------- Search section --------- */
 /* --------- Search bar --------- */
-.machine-color {
+.appliance-color {
   background-color: #68d9a4;
 }
-.ingredient-color {
+.ingredients-color {
   background-color: #3282f7;
 }
-.tool-color {
+.ustensils-color {
   background-color: #ed6454;
 }
 
@@ -152,8 +152,8 @@ header {
   width: fit-content;
 }
 
-#machines-list,
-#tools-list,
+#appliance-list,
+#ustensils-list,
 #ingredients-list {
   display: none;
   position: absolute;
@@ -204,16 +204,16 @@ header {
   text-overflow: ellipsis;
 }
 
-#machines-list li:hover,
-#tools-list li:hover,
+#appliance-list li:hover,
+#ustensils-list li:hover,
 #ingredients-list li:hover {
   background-color: rgba(255, 255, 255, 0.306);
   border-radius: 5px;
   padding: 2px;
 }
 
-.advancedFilters:hover #machines-list,
-.advancedFilters:hover #tools-list,
+.advancedFilters:hover #appliance-list,
+.advancedFilters:hover #ustensils-list,
 .advancedFilters:hover #ingredients-list {
   display: flex;
 }
@@ -242,6 +242,11 @@ header {
   display: none;
 }
 
+/* --------- NO Result Recipes div --------- */
+#noResults {
+  display: none;
+  padding-bottom: 15px;
+}
 /* --------- Result Recipes section --------- */
 
 #resultRecipes-container {

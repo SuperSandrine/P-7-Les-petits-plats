@@ -3,9 +3,7 @@ export function createARecipeFactory (recipeDatas){
   const { id, name, ingredients , time, description, appliance, ustensils} = recipeDatas
   let createRecipeIngredientsList=[]
   // NICOLAS: est qu'on peut destructurer ingredients? si oui comment?
-  //const {ingredients:[{ingredient}]} = recipeDatas
-  //const { ingredient2 , unit, quantity}=ingredients
-  //console.log("list : ", ingredient2 ) // undefined
+
 
   // For/in loops throught properties of an object 
   for ( let x in ingredients){

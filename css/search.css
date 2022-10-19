@@ -20,7 +20,7 @@ body {
   }
 }
 
-/* --------- Header page --------- */
+/* ------------------ Header page ------------------ */
 
 header {
   display: flex;
@@ -28,8 +28,8 @@ header {
   padding-bottom: 15px;
 }
 
-/* --------- Search section --------- */
-/* --------- Search bar --------- */
+/* --------------------------- Search section --------------------------- */
+/* ------------------ Search bar ------------------ */
 .appliance-color {
   background-color: #68d9a4;
 }
@@ -89,34 +89,32 @@ header {
   font-size: 20px;
 }
 
-/* --------- Search menu --------- */
+/* ------------------ Search menus ------------------ */
 
 #advancedFilters-container {
-  /* display: flex; */
-  /* justify-content: flex-start;
-  position: relative;*/
-  /* position: relative;
-  height: 90px;
-  width: 100%; */
   padding-bottom: 25px;
 }
 
-#advancedFilters-list {
+menu {
+  list-style: none;
+}
+
+div > menu {
   display: flex;
+  list-style: none;
   gap: 10px;
   justify-content: flex-start;
 }
 @media screen and (max-width: 600px) {
-  #advancedFilters-list {
+  div > menu {
     flex-direction: column;
   }
 }
-.advancedFilters {
-  /* display: inline-block; */
+div > menu > li {
   position: relative;
 }
-
-.advancedFilters-button {
+div > menu > li > button {
+  /* text-transform: capitalize; */
   color: white;
   padding: 23px 60px 23px 20px;
   font-weight: 700;
@@ -124,130 +122,110 @@ header {
   border: none;
   border-radius: 5px;
   text-align: left;
-  /* position: relative; */
+  position: relative;
 }
 @media screen and (max-width: 600px) {
-  .advancedFilters-button {
+  div > menu > li > button {
     width: 100%;
   }
 }
-.advancedFilters span {
-  line-height: 22px;
-}
-.advancedFilters input {
+div > menu > li > button > input {
   display: none;
   border: none;
-  /* padding: 25px; */
-  /* border-radius: 5px; */
-  /* z-index: 4; */
-  /* position: absolute; */
   color: rgba(255, 255, 255, 0.677);
   left: 0;
-  min-width: calc(100vw - (200px + 440px));
+  width: 100%;
+  min-width: calc(100vw - (200px + 420px));
   padding: 0;
 }
-.advancedFilters input::placeholder {
+div > menu > li > button > span {
+  line-height: 22px;
+}
+
+div > menu > li > button > input::placeholder {
   color: rgba(255, 255, 255, 0.677);
   font-weight: 400;
   width: fit-content;
 }
 
-#appliance-list,
-#ustensils-list,
-#ingredients-list {
-  display: none;
+div > menu > li > menu {
+  display: flex;
   position: absolute;
-  /* padding: 20px; */
-  top: 65px; /* placer en absolu, le container se cale
-  juste dessous son relative grâce à inline-block*/
-  box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  color: white;
-  width: 100%;
-  /* width: 60vw; */
-  /* grid-template-columns: 1fr 1fr 1fr; */
-  flex-wrap: wrap;
-  /* column-gap: 20px; */
   row-gap: 7px;
   border-radius: 0 0 5px 5px;
   padding: 10px 20px;
   justify-content: space-between;
+  flex-wrap: wrap;
+  box-shadow: 0px 12px 12px 0px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  color: white;
+  width: 100%;
+  top: 65px;
+  visibility: hidden;
 }
-.list {
-  text-decoration: none;
-  list-style: none;
-  padding: 2px;
+div > menu > li.active > menu {
+  visibility: visible;
+}
+div > menu > li.active > button > input {
+  display: flex;
+}
+div > menu > li.active > button > span {
+  display: none;
+}
+
+div > menu > li > menu > li {
   width: 30%;
 }
 @media screen and (max-width: 900px) {
-  .list {
+  div > menu > li > menu > li {
     width: 47%;
   }
 }
-@media screen and (max-width: 400px) {
-  .list {
+@media screen and (max-width: 700px) {
+  div > menu > li > menu > li {
     width: 100%;
   }
 }
 
-.list button {
+div > menu > li > menu > li > button {
   background-color: transparent;
   text-align: left;
   border: none;
   color: white;
-  /* display: flex; */
-  padding: 0;
-  /* line-height: 18px; */
+  padding: 2px;
   white-space: nowrap;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-#appliance-list li:hover,
-#ustensils-list li:hover,
-#ingredients-list li:hover {
+div > menu > li > menu > li > button:hover {
   background-color: rgba(255, 255, 255, 0.306);
   border-radius: 5px;
   padding: 2px;
 }
 
-.advancedFilters:hover #appliance-list,
-.advancedFilters:hover #ustensils-list,
-.advancedFilters:hover #ingredients-list {
-  display: flex;
-}
-
-.advancedFilters:hover input {
-  display: block;
-}
-
-.advancedFilters-button:after {
+div > menu > li > button:after {
   position: absolute;
   content: "";
   top: 28px;
   right: 20px;
   width: 16px;
   height: 11px;
-  background: url(../assets/uparrow.svg);
+  background: url(../assets/downarrow.svg);
+  transform: rotate(180deg);
+  z-index: 1;
+}
+div > menu > li.active > button:after {
   transform: none;
 }
 
-/*point the arrow upwards when the select box is open (active):*/
-.advancedFilters:hover .advancedFilters-button:after {
-  transform: rotate(180deg);
-  z-index: 5;
-}
-.advancedFilters:hover .advancedFilters-button span {
-  display: none;
-}
-
-/* --------- NO Result Recipes div --------- */
+/* ------------------ NO Result Recipes div ------------------ */
 #noResults {
   display: none;
   padding-bottom: 15px;
 }
-/* --------- Result Recipes section --------- */
+/* ------------------ Result Recipes section ------------------ */
 
 #resultRecipes-container {
   display: flex;

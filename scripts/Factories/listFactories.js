@@ -1,6 +1,6 @@
 import { refit } from "../Utils/filters.js"
 
-const advancedFiltersUl= document.getElementById('advancedFilters-list')
+const advancedFiltersMenu= document.getElementById('advancedFilters-list')
 
 
 // pour chaque recette, la factory récupère les datas et les mets dans une liste
@@ -21,19 +21,13 @@ export function createList(array){
 export function createAListFactory(recipeDatas){
 
     const { id, name, ingredients , time, description, appliance, ustensils} = recipeDatas  
-    
-//    const applianceItem = appliance
+
+
+//     function getItemsList(TitreList){
+//    const applianceItem = appliance.toLowerCase().trim()
 //    console.log('appItem:', applianceItem)
-//    const ustItem = ustensils.flat()
-//    console.log(ustItem)
-
-
-
-    function getItemsList(TitreList){
-   const applianceItem = appliance.toLowerCase().trim()
-   console.log('appItem:', applianceItem)
-return applianceItem
-}
+// return applianceItem
+// }
 
     // en paramètre element est le titre de la liste: appliance, austensils ou ingredients
     function getListBlock(element){
@@ -48,32 +42,33 @@ return applianceItem
 
     const liBlock = document.createElement('li')
     liBlock.className='advancedFilters'
-    const divButton = document.createElement('div')
+    const divButton = document.createElement('button')
     divButton.setAttribute('class',`advancedFilters-button ${element}-color`)
     const divButtonName = document.createElement('span')
+    divButtonName.setAttribute('id',`span-${element}`)
     divButtonName.innerText = element
     const divButtonSearchBar = document.createElement('input')
-    divButtonSearchBar.setAttribute('class',`${element}-color`)
+    divButtonSearchBar.setAttribute('class',`${element}-color advancedSearch`)
     divButtonSearchBar.setAttribute('type', 'search')
     divButtonSearchBar.setAttribute('id',`search-${element}`)
     divButtonSearchBar.setAttribute('placeholder',`Rechercher dans ${element}`)
-    const ulBlock = document.createElement('ul')
-    ulBlock.setAttribute('class',`${element}-color`)
-    ulBlock.setAttribute('id',`${element}-list`)
+    const menuBlock = document.createElement('menu')
+    menuBlock.setAttribute('class',`${element}-color`)
+    menuBlock.setAttribute('id',`${element}-list`)
     // const listElement = document.createElement('li') // à créer dynamiquement
     // listElement.setAttribute('class','list')
     // const listElementButton=document.createElement('button')
     // listElementButton.innerText = "grille pain"
     
     
-    advancedFiltersUl.appendChild(liBlock)
+    advancedFiltersMenu.appendChild(liBlock)
     liBlock.appendChild(divButton)
     divButton.appendChild(divButtonName)
     divButton.appendChild(divButtonSearchBar)
-    liBlock.appendChild(ulBlock)
+    liBlock.appendChild(menuBlock)
     
     
-//        return ulBlock
+//        return menuBlock
     }
     // une fonction qui prend element (appl, ust ou ing) et 
     // et qui fait un tableau de ces élémenets
@@ -116,8 +111,8 @@ return applianceItem
         //  OK - reste à enlever les element en double :)
         //  OK - rendre dynamique en prenant le tableau de résultat de recherche
         //pour créer la liste et non le tableau recipes
-        const ulBlock = document.querySelector(`ul #${itemTittleList}-list`)
-        ulBlock.appendChild(listElement)
+        const menuBlock = document.querySelector(`menu #${itemTittleList}-list`)
+        menuBlock.appendChild(listElement)
         listElement.appendChild(listElementButton)
         return item
     }
@@ -126,7 +121,7 @@ return applianceItem
     return{ 
         getListBlock,
         getListTemplate,
-        getItemsList, 
+    //    getItemsList, 
     }
   }
   

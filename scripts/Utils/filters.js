@@ -28,11 +28,10 @@ export function filterThroughInput(e, array){
     const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
     let mixedfilteredArrayFromSearchBar = [...filteredArrayDescription,...filteredArrayName, ...filteredArrayIngredients]
     const setOfMainSearchInput = [...new Set(mixedfilteredArrayFromSearchBar)]
-    
-
     console.log(setOfMainSearchInput) 
     return setOfMainSearchInput
 }
+
 //console.log(setOfMainSearchInput)
 // si SEt Of Main Search est vide, alors il n'y a pas de correspondance
 // setOfMainSearchInput.length == 0 

@@ -21,8 +21,7 @@ import { recipes } from "../../data/recipes.js"
 // change input text and datas to find a match despite space or case values
 const refit = (x => x.trim().toLowerCase())
 
-export function filterThroughInput(e, array){
-
+export function filterThroughMainInput(e, array){
     const filteredArrayDescription = array.filter(recipe => refit(recipe.description).includes(refit(e.target.value)))
     const filteredArrayName = array.filter(recipe => refit(recipe.name).includes(refit(e.target.value)))
     const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
@@ -37,5 +36,30 @@ export function filterThroughInput(e, array){
 // setOfMainSearchInput.length == 0 
 // alors setattribute display flex/ removeattribute display none
 // sinon affiché les recettes
+
+    // const filteredArrayDescription = array.filter(recipe => refit(recipe.description).includes(refit(e.target.value)))
+    // const filteredArrayName = array.filter(recipe => refit(recipe.name).includes(refit(e.target.value)))
+    // const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
+    
+
+// - trouver le moyen de conditionner le filtre à appliquer en fonction de l'input
+export function filterThroughAdvancedInput(e, array, tittle){
+    if(tittle === "appliance"){
+        const filteredArrayAppliance = array.filter(recipe => refit(recipe.appliance).includes(refit(e.target.value)))
+    console.log("filter appliance : ", filteredArrayAppliance)
+    return filteredArrayAppliance
+    }
+    else if (tittle === "ustensils"){
+        const filteredArrayUstensils = array.filter(recipe => recipe.ustensils.some(app=> refit(app).includes(refit(e.target.value))))
+        console.log("filter ustensils : ", filteredArrayUstensils)
+    return filteredArrayUstensils
+    }
+    else if (tittle === "ingredients"){
+        const filteredAdvancedArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
+        console.log("filter ingredients : ", filteredAdvancedArrayIngredients);
+    return filteredAdvancedArrayIngredients
+    }
+}
+
 
 export{refit}

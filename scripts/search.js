@@ -1,7 +1,7 @@
 import { recipes } from '../data/recipes.js'
 import { createAListFactory, createList } from './Factories/listFactories.js'
 import { createARecipeFactory } from './Factories/recipefactories.js'
-import { filterThroughInput,refit  } from './Utils/filters.js'
+import { filterThroughMainInput,refit, filterThroughAdvancedInput  } from './Utils/filters.js'
 import { foldDropdown, unfoldAndFoldDropdown } from './Utils/dropdown.js'
 
 
@@ -9,6 +9,8 @@ import { foldDropdown, unfoldAndFoldDropdown } from './Utils/dropdown.js'
 const mainInput = document.getElementById('searchBar')
 const recipesContainer = document.getElementById('resultRecipes-container')
 const noResultsContainer= document.getElementById('noResults')
+const selectedTagContainer = document.getElementById("advancedSelectedFilterTags-container")
+
 
 console.log(recipes)
 
@@ -20,14 +22,14 @@ function displayRecipes(array){
   recipesContainer.innerHTML = " "
   if (array.length !== 0 ){
     noResultsContainer.style.display="none"
-  const allRecipes = array.map( recipe => recipesContainer.appendChild(createARecipeFactory(recipe).getRecipeCard())
-  )
+  array.map( recipe => recipesContainer.appendChild(createARecipeFactory(recipe).getRecipeCard()))
+//  const allRecipes = array.map( recipe => recipesContainer.appendChild(createARecipeFactory(recipe).getRecipeCard()))
+  
   }else { 
     console.log(noResultsContainer)
     noResultsContainer.style.display="flex"
   }
 //return allRecipes 
-// NICOLAS: est-ce que la portée de allRecipes n'est que dans la condition if/else?
 }
 
 //affiche les boutons avec leur titre 
@@ -40,26 +42,32 @@ function displayListButtons(array){
 // il faudrait d'abord créer la liste 
 // et ensuite afficher dans les boutons un par un par rapport à la liste
 function displayItemsInButtonsBlocks(array){
-  const applianceItemsList= [...new Set((array.map((recipe) => recipe.appliance)).map(e=>refit(e)))]
-  //  console.log("appliance", applianceItemsList)
-  //(11) ['Blender', 'Saladier', 'Cocotte', 'Cuiseur de riz', 'Four', 'Casserole', 'Poêle à crêpe', 
-  const ustensilsItemsList= [...new Set((array.map((recipe) => recipe.ustensils).flat()).map(e=>refit(e)))]
-  //  console.log(ustensilsItemsList)
-  // (25) ['cuillère à soupe', 'verres', 'presse citron', 'couteau', 'saladier', 'passoire', 'moule à tarte', 
-  const ingredientsItemsList= [...new Set(((array.map((recipe)=>recipe.ingredients.map((ing)=>ing.ingredient))).flat()).map(e=>refit(e)))]
-  //  console.log("ingredients : ",ingredientsItemsList)
-  //(121) ['lait de coco', 'jus de citron', 'crème de coco', 'sucre', 'glaçons',...
+// vvv ça marche mais à déplacer
+  // const applianceItemsList= [...new Set((array.map((recipe) => recipe.appliance)).map(e=>refit(e)))]
+  // //  console.log("appliance", applianceItemsList)
+  // //(11) ['Blender', 'Saladier', 'Cocotte', 'Cuiseur de riz', 'Four', 'Casserole', 'Poêle à crêpe', 
+  // const ustensilsItemsList= [...new Set((array.map((recipe) => recipe.ustensils).flat()).map(e=>refit(e)))]
+  // //  console.log(ustensilsItemsList)
+  // // (25) ['cuillère à soupe', 'verres', 'presse citron', 'couteau', 'saladier', 'passoire', 'moule à tarte', 
+  // const ingredientsItemsList= [...new Set(((array.map((recipe)=>recipe.ingredients.map((ing)=>ing.ingredient))).flat()).map(e=>refit(e)))]
+  // //  console.log("ingredients : ",ingredientsItemsList)
+  // //(121) ['lait de coco', 'jus de citron', 'crème de coco', 'sucre', 'glaçons',...
 
-  const advancedFiltersLists = {
-    ingredients: ingredientsItemsList,
-    appliance: applianceItemsList,
-    ustensils: ustensilsItemsList,
-  }
+  // const advancedFiltersLists = {
+  //   ingredients: ingredientsItemsList,
+  //   appliance: applianceItemsList,
+  //   ustensils: ustensilsItemsList,
+  // }
+  // ^^^^end
+  const advancedFiltersLists= createAListFactory(array).makeLists(array)
+  console.log("advancedFiltersLists : ", advancedFiltersLists)
 
   for(const key in advancedFiltersLists){
     const menuBlock = document.querySelector(`menu #${key}-list`)
     menuBlock.innerHTML=" "
-    const listapp3 = advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
+    advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
+    //const listapp3 = advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
+    // peut-^tre pas besoin de map mais for each
     })
   //  console.log(listapp3) //(121) undefined 
   // NICOLAs: pourquoi ça renvoit des undefined? problème de portée? où est-ce qu'il faudrait que je le place
@@ -67,10 +75,32 @@ function displayItemsInButtonsBlocks(array){
   }
 }
 
-function displayTag(){
-  // prend la donnée
-  // crée un élément
-  // append a child dans le container de tag
+
+function displayTag(item, itemTittleList){
+selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, itemTittleList)
+//  (item= buttoncliqué),
+//  (récupérer le titre de la liste au moement du clix) 
+)
+
+
+  // const selectedTag = document.createElement('div')
+  // selectedTag.className='advancedSelectedFilterTag'
+  // selectedTag.classList.add(`${element}-color`)
+  // const textItem = document.createElement('p')
+  // textItem.innerText = item
+  // const tagClosure = document.createElement('i')
+  // tagClosure.className="far fa-times-circle"
+
+  // selectedTag.appendChild(textItem)
+  // selectedTag.appendChild(tagClosure)
+  
+  /*  <!-- <div class="advancedSelectedFilterTag ingredients-color">
+              <p>chochochocolat</p>
+              <i class="far fa-times-circle"></i>
+            </div> -->*/
+  // OK - prend la donnée
+  // OK - crée un élément
+  // OK - append a child dans le container de tag
   // s'ajoute au filtre de recheher
   // click droix: Se remove et s'enlève des filtres
 }
@@ -96,8 +126,8 @@ displayItemsInButtonsBlocks(recipes)
 mainInput.addEventListener('input', (event) =>{
   console.log(event.target.value)
   if (event.target.value.length > 2){
-    displayRecipes(filterThroughInput(event, recipes))
-    displayItemsInButtonsBlocks(filterThroughInput(event, recipes))
+    displayRecipes(filterThroughMainInput(event, recipes))
+    displayItemsInButtonsBlocks(filterThroughMainInput(event, recipes))
   } else if (event.target.value.length === 0){
     displayRecipes(recipes)
     displayItemsInButtonsBlocks(recipes) //recipes s'il n'y a pas un autre array filtré en cours
@@ -112,9 +142,10 @@ console.log(advancedFiltersLi)
 /* when one button is clicked : open/close the current dropdown */
 advancedFiltersLi.forEach(li => {
   li.addEventListener('click', (e) => {
-    //console.log(e.target)
+    // console.log("e : ", e.target)
     e.stopImmediatePropagation()
     unfoldAndFoldDropdown(li, e)
+
     // TODO: mettre ce qui suit dans une fonction ?
     // condition : ne pas cliquer sur le menu (dans les espaces autour des boutons)
     // et ne pas cliquer sur le bouton de tête (qui ferme la dropdown)
@@ -122,11 +153,14 @@ advancedFiltersLi.forEach(li => {
       (!e.target.contains(li.firstChild)) /* button */ && 
       (!e.target.contains(li.firstChild.firstChild)) /*son span*/ && 
       (!e.target.contains(li.firstChild.firstChild.nextSibling)) /*son input*/ ){
-       console.log("button clické : ",e.target.innerText )
+      console.log("button clické : ",e.target.innerText )
+      //console.log('data récupéré: ', (e.target).getAttribute('data-advanced-filter'));
+
        // faire l'action:
-       //    - afficher le tag (cf displayTag())
+       //    OK - afficher le tag (cf displayTag())
        //    - filtre recipes avec ce mot clef
-     }
+        displayTag(e.target.innerText, (e.target).getAttribute('data-advanced-filter'))
+    }
   })
 })
 
@@ -137,15 +171,42 @@ window.addEventListener('click', () => {
 
 const advancedFiltersInput = document.querySelectorAll("div > menu > li > button > input"); 
 // console.log(advancedFiltersInput) //vide
+
+// cas où mainInput est vide
 advancedFiltersInput.forEach( input => {
   input.addEventListener('input', (event) =>{
-    event.preventDefault()
-    console.log(event.target.value)
-    displayRecipes(filterThroughInput(event,recipes))
-    displayItemsInButtonsBlocks(filterThroughInput(event, recipes))
+    event.preventDefault() // je sais pas trop à quoi ça sert
+
+    //console.log("premier e.target: ", event.target);
+        //<input class="ingredients-color advancedSearch" 
+    // type="search" id="search-ingredients" 
+    // placeholder="Rechercher dans ingredients">
+    // OK : TODO: récupérere le titre là-dedans
+    //console.log("premier e.target avec data: ", (event.target).getAttribute('data-advanced-filter')); // true
+    //console.log("premier e.target: ", (event.target).getAttribute('id').includes('appliance')); // true
+      // 3 conditions, si includes ingredients true, alors tittle = ingredient, return tittle
+      // 3 fois pour les 3 catégories
+    // OU utiliser les datas attributes pour être plus efficace
+
+    const listTittle = (event.target).getAttribute('data-advanced-filter')
+    console.log("tittle",listTittle);
+    console.log("value", event.target.value)
+    // displayRecipes(recipes)
+    displayItemsInButtonsBlocks(filterThroughAdvancedInput(event, recipes,listTittle )) // pour mixer renvoie un array de 6
+    // si je clique sur le boutton, alors j'affiche le tag et j'affiche les recettes
   })
 })
 
 
 
 
+// Refactoriser le code de la recherche :
+//  - une fonction générale qui filtre et affiche les recettes en prenant en compte :
+//    - l'input de recherche (si renseigné) 
+//    - le filtre applicances (si renseigné) 
+//    - le filtre ustensils (si renseigné) 
+//    - le filtre ingredients (si renseigné)
+// OK - Quand on saisit dans l'input de recherche, les filtres sont mis à jour
+// OK - Quand on saisit dans l'input d'un filtre, cela met le filtre concerné à jour
+// - Quand on clique sur un filtre, on appelle la fonction générale qui filtre et affiche les recettes
+//    - Optionnel : cela met également à jour les autres filtres

@@ -18,6 +18,7 @@ console.log(recipes)
 // ----------------- Fonctions
 
 // TODO= si on ne réutilise pas allRecipes, alors il faudra peut-être passer par un ForEach
+// affiche les recettes une par une à partir d'un array de recette trié ou non
 function displayRecipes(array){
   recipesContainer.innerHTML = " "
   if (array.length !== 0 ){
@@ -26,7 +27,7 @@ function displayRecipes(array){
 //  const allRecipes = array.map( recipe => recipesContainer.appendChild(createARecipeFactory(recipe).getRecipeCard()))
   
   }else { 
-    console.log(noResultsContainer)
+//    console.log(noResultsContainer)
     noResultsContainer.style.display="flex"
   }
 //return allRecipes 
@@ -35,44 +36,31 @@ function displayRecipes(array){
 //affiche les boutons avec leur titre 
 function displayListButtons(array){
   const buttonsEntitled = createList(array)
-  buttonsEntitled.forEach(element => createAListFactory(element).getListBlock(element))
+  buttonsEntitled.forEach(element => createAListFactory().getListBlock(element))
   return buttonsEntitled
 }
 
-// il faudrait d'abord créer la liste 
+// il faudrait d'abord créer la liste (dans listfactory)
 // et ensuite afficher dans les boutons un par un par rapport à la liste
 function displayItemsInButtonsBlocks(array){
-// vvv ça marche mais à déplacer
-  // const applianceItemsList= [...new Set((array.map((recipe) => recipe.appliance)).map(e=>refit(e)))]
-  // //  console.log("appliance", applianceItemsList)
-  // //(11) ['Blender', 'Saladier', 'Cocotte', 'Cuiseur de riz', 'Four', 'Casserole', 'Poêle à crêpe', 
-  // const ustensilsItemsList= [...new Set((array.map((recipe) => recipe.ustensils).flat()).map(e=>refit(e)))]
-  // //  console.log(ustensilsItemsList)
-  // // (25) ['cuillère à soupe', 'verres', 'presse citron', 'couteau', 'saladier', 'passoire', 'moule à tarte', 
-  // const ingredientsItemsList= [...new Set(((array.map((recipe)=>recipe.ingredients.map((ing)=>ing.ingredient))).flat()).map(e=>refit(e)))]
-  // //  console.log("ingredients : ",ingredientsItemsList)
-  // //(121) ['lait de coco', 'jus de citron', 'crème de coco', 'sucre', 'glaçons',...
-
-  // const advancedFiltersLists = {
-  //   ingredients: ingredientsItemsList,
-  //   appliance: applianceItemsList,
-  //   ustensils: ustensilsItemsList,
-  // }
-  // ^^^^end
-  const advancedFiltersLists= createAListFactory(array).makeLists(array)
+  const advancedFiltersLists = createAListFactory().makeLists(array)
   console.log("advancedFiltersLists : ", advancedFiltersLists)
 
-  for(const key in advancedFiltersLists){
-    const menuBlock = document.querySelector(`menu #${key}-list`)
+  for(const title in advancedFiltersLists){
+    //console.log("title ou key", title)
+    const menuBlock = document.querySelector(`menu #${title}-list`)
     menuBlock.innerHTML=" "
-    advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
+    advancedFiltersLists[title].map(item => {createAListFactory().getListTemplate(item, title)
     //const listapp3 = advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
     // peut-^tre pas besoin de map mais for each
+
     })
   //  console.log(listapp3) //(121) undefined 
   // NICOLAs: pourquoi ça renvoit des undefined? problème de portée? où est-ce qu'il faudrait que je le place
   //pour le voir?
+  // return listapp3
   }
+
 }
 
 
@@ -81,7 +69,6 @@ selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, i
 //  (item= buttoncliqué),
 //  (récupérer le titre de la liste au moement du clix) 
 )
-
 
   // const selectedTag = document.createElement('div')
   // selectedTag.className='advancedSelectedFilterTag'
@@ -105,12 +92,19 @@ selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, i
   // click droix: Se remove et s'enlève des filtres
 }
 
+// suppress tag clicked 
+function suppressTag(e){
+  selectedTagContainer.removeChild(e.target.parentNode.parentNode)
+}
+
+
 // ----------------- APPEL des fonctions
 
 
 displayRecipes(recipes)
 displayListButtons(recipes)
 displayItemsInButtonsBlocks(recipes)
+
 
 
 // à activer si on a besoin de gérer l'ordre d'appel des fonctions
@@ -142,7 +136,7 @@ console.log(advancedFiltersLi)
 /* when one button is clicked : open/close the current dropdown */
 advancedFiltersLi.forEach(li => {
   li.addEventListener('click', (e) => {
-    // console.log("e : ", e.target)
+     console.log("e.target : ", e.target)
     e.stopImmediatePropagation()
     unfoldAndFoldDropdown(li, e)
 
@@ -155,11 +149,11 @@ advancedFiltersLi.forEach(li => {
       (!e.target.contains(li.firstChild.firstChild.nextSibling)) /*son input*/ ){
       console.log("button clické : ",e.target.innerText )
       //console.log('data récupéré: ', (e.target).getAttribute('data-advanced-filter'));
-
        // faire l'action:
        //    OK - afficher le tag (cf displayTag())
-       //    - filtre recipes avec ce mot clef
+       //    OK - filtre recipes avec ce mot clef
         displayTag(e.target.innerText, (e.target).getAttribute('data-advanced-filter'))
+        displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
     }
   })
 })
@@ -192,21 +186,30 @@ advancedFiltersInput.forEach( input => {
     console.log("tittle",listTittle);
     console.log("value", event.target.value)
     // displayRecipes(recipes)
-    displayItemsInButtonsBlocks(filterThroughAdvancedInput(event, recipes,listTittle )) // pour mixer renvoie un array de 6
+    displayItemsInButtonsBlocks(filterThroughAdvancedInput(event.target.value, recipes,listTittle )) // pour mixer renvoie un array de 6
     // si je clique sur le boutton, alors j'affiche le tag et j'affiche les recettes
   })
 })
 
+window.addEventListener('click', (e)=>{console.log(e.target.className.includes("far fa-times-circle"));
+  if (e.target.className.includes("far fa-times-circle")){
+    //alors supprime le tag
+    suppressTag(e)
+    // et modifie le filtre en fonction 
+  } else {
+    console.log("pas supprimé");
+  }
+})
 
 
 
 // Refactoriser le code de la recherche :
 //  - une fonction générale qui filtre et affiche les recettes en prenant en compte :
-//    - l'input de recherche (si renseigné) 
-//    - le filtre applicances (si renseigné) 
-//    - le filtre ustensils (si renseigné) 
-//    - le filtre ingredients (si renseigné)
+//      - l'input de recherche (si renseigné) 
+//      - le filtre applicances (si renseigné) 
+//      - le filtre ustensils (si renseigné) 
+//      - le filtre ingredients (si renseigné)
 // OK - Quand on saisit dans l'input de recherche, les filtres sont mis à jour
 // OK - Quand on saisit dans l'input d'un filtre, cela met le filtre concerné à jour
-// - Quand on clique sur un filtre, on appelle la fonction générale qui filtre et affiche les recettes
-//    - Optionnel : cela met également à jour les autres filtres
+// OK(mais ce n'est pas la fonction générale) - Quand on clique sur un tag de filtre, on appelle la fonction générale qui filtre et affiche les recettes
+//      OK - Optionnel : cela met également à jour les autres filtres

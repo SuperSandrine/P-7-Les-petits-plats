@@ -21,6 +21,7 @@ import { recipes } from "../../data/recipes.js"
 // change input text and datas to find a match despite space or case values
 const refit = (x => x.trim().toLowerCase())
 
+// renvoie une liste de recettes
 export function filterThroughMainInput(e, array){
     const filteredArrayDescription = array.filter(recipe => refit(recipe.description).includes(refit(e.target.value)))
     const filteredArrayName = array.filter(recipe => refit(recipe.name).includes(refit(e.target.value)))
@@ -43,23 +44,25 @@ export function filterThroughMainInput(e, array){
     
 
 // - trouver le moyen de conditionner le filtre à appliquer en fonction de l'input
-export function filterThroughAdvancedInput(e, array, tittle){
+// renvoie une liste de recettes
+export function filterThroughAdvancedInput(valeur, array, tittle){
     if(tittle === "appliance"){
-        const filteredArrayAppliance = array.filter(recipe => refit(recipe.appliance).includes(refit(e.target.value)))
+        const filteredArrayAppliance = array.filter(recipe => refit(recipe.appliance).includes(refit(valeur)))
     console.log("filter appliance : ", filteredArrayAppliance)
     return filteredArrayAppliance
     }
     else if (tittle === "ustensils"){
-        const filteredArrayUstensils = array.filter(recipe => recipe.ustensils.some(app=> refit(app).includes(refit(e.target.value))))
+        const filteredArrayUstensils = array.filter(recipe => recipe.ustensils.some(app=> refit(app).includes(refit(valeur))))
         console.log("filter ustensils : ", filteredArrayUstensils)
     return filteredArrayUstensils
     }
     else if (tittle === "ingredients"){
-        const filteredAdvancedArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
+        const filteredAdvancedArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(valeur))))
         console.log("filter ingredients : ", filteredAdvancedArrayIngredients);
     return filteredAdvancedArrayIngredients
     }
 }
+
 
 
 export{refit}

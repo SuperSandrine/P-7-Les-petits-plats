@@ -101,6 +101,7 @@ export function createAListFactory(Datas){
         menuBlock.appendChild(listElement)
         listElement.appendChild(listElementButton)
         //return item // pas besoin
+        return item
     }
 
     function getItemTagTemplate(item, itemTittleList){
@@ -109,10 +110,13 @@ export function createAListFactory(Datas){
         selectedTag.classList.add(`${itemTittleList}-color`)
         const textItem = document.createElement('p')
         textItem.innerText = item
-        const tagClosure = document.createElement('i')
-        tagClosure.className="far fa-times-circle"
+        const tagClosureButton = document.createElement('button')
+        const tagClosureI = document.createElement('i')
+        tagClosureI.className="far fa-times-circle"
         selectedTag.appendChild(textItem)
-        selectedTag.appendChild(tagClosure)
+        selectedTag.appendChild(tagClosureButton)
+        tagClosureButton.appendChild(tagClosureI)
+
     return selectedTag
     }
 

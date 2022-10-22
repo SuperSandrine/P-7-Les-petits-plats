@@ -83,6 +83,11 @@ header {
   font-weight: 700;
   font-size: 14px;
 }
+.advancedSelectedFilterTag button {
+  border: none;
+  background-color: unset;
+  color: white;
+}
 .advancedSelectedFilterTag i {
   display: flex;
   padding-left: 15px;

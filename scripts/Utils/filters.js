@@ -28,7 +28,7 @@ export function filterThroughMainInput(e, array){
     const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
     let mixedfilteredArrayFromSearchBar = [...filteredArrayDescription,...filteredArrayName, ...filteredArrayIngredients]
     const setOfMainSearchInput = [...new Set(mixedfilteredArrayFromSearchBar)]
-    console.log(setOfMainSearchInput) 
+    console.log("ensemble des results de mainInput : ", setOfMainSearchInput) 
     return setOfMainSearchInput
 }
 
@@ -44,7 +44,7 @@ export function filterThroughMainInput(e, array){
     
 
 // - trouver le moyen de conditionner le filtre à appliquer en fonction de l'input
-// renvoie une liste de recettes
+// renvoie une liste de recettes (veleur peut être e.target de input ou de click)
 export function filterThroughAdvancedInput(valeur, array, tittle){
     if(tittle === "appliance"){
         const filteredArrayAppliance = array.filter(recipe => refit(recipe.appliance).includes(refit(valeur)))
@@ -62,6 +62,7 @@ export function filterThroughAdvancedInput(valeur, array, tittle){
     return filteredAdvancedArrayIngredients
     }
 }
+
 
 
 

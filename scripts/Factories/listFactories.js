@@ -101,7 +101,6 @@ export function createAListFactory(Datas){
         menuBlock.appendChild(listElement)
         listElement.appendChild(listElementButton)
         //return item // pas besoin
-        return item
     }
 
     function getItemTagTemplate(item, itemTittleList){

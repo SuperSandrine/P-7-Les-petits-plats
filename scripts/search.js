@@ -339,14 +339,14 @@ function search(){
 
                 //technique et syntaxe
                 // converting between Set and Array
-// const mySet2 = new Set([1, 2, 3, 4]);
-// console.log("un set :", mySet2);
-// console.log(mySet2.size); // 4
-// console.log("un array :",[...mySet2]); // [1, 2, 3, 4]
+                    // const mySet2 = new Set([1, 2, 3, 4]);
+                    // console.log("un set :", mySet2);
+                    // console.log(mySet2.size); // 4
+                    // console.log("un array :",[...mySet2]); // [1, 2, 3, 4]
 
-// // intersect can be simulated via
-// const intersection = new Set([...mySet1].filter((x) => mySet2.has(x)));
-// console.log('intersection',intersection);
+                    // // intersect can be simulated via
+                    // const intersection = new Set([...mySet1].filter((x) => mySet2.has(x)));
+                    // console.log('intersection',intersection);
               
                 // OK récupérer l'array (déjà filtré dans mainInput ou array Recipes)
                 // OK récupérer le tittle 
@@ -358,7 +358,6 @@ function search(){
                 // displayRecipes(array)
               
                 // vvvvvvvTECHNIQUE MAP
-
                 // ^^^^^^^
 
                 // vvvvvvvTECHNIQUE ARRAY:vvvvvv marche en parti
@@ -428,9 +427,10 @@ function search(){
 
                 if (tagCount==0){
                 displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))}
-                else if (tagCount>1){
+                else if (tagCount>1 && tagCount<3){
                   // TODO: créer un array spécial (paramètre pour displayRecipes)
 
+                  //ce que me retourne tagsMap
                   //Map(2) {'blender' => 'appliance', 'cuillère à soupe' => 'ustensils'}
                   // [[Entries]]
                   // 0: {"blender" => "appliance"}
@@ -444,18 +444,55 @@ function search(){
                       return first.filter(item => s.has(item));
                   };
 
+                
+                  
+
                   let mixedtest=[]
                   for (const [key, value] of tagsMap) {
                     mixedtest.push(filterThroughAdvancedInput(key, recipes, value))}
                     console.log("mixedtest1 juste filtré/pushé",mixedtest)
+                    // j'ai du coup un tableau avec les recettes, avec des tableaux de chaque tri par tag
                    let newmix = intersection(mixedtest[mixedtest.length-2], mixedtest[mixedtest.length-1])
                    console.log("newmix",newmix);
-                   mixedtest.push(newmix)
+                   //mixedtest.push(newmix)
                    displayRecipes(newmix)
                    displayItemsInButtonsBlocks(newmix)
-                    // ça marche avec 2 mais pas avec 3 
- 
-              
+                    // ça marche avec 2 mais pas avec 3, avec 3 ça ne prend en compte que les deux derniers index de mixedtest et l'index newmix a été écrasé.
+                  }else if (tagCount>3){
+                    let mixedtest2=[]
+                    for (const [key, value] of tagsMap) {
+                      mixedtest2.push(filterThroughAdvancedInput(key, recipes, value))}
+
+                      function intersection2(first, second)
+                  {
+                      let s = new Set(second);
+                      return first.filter(item => s.has(item));
+                  };
+
+                    function fibonacci(nbr) {
+                      var n1 = 0;
+                      var n2 = 1;
+                      var somme = 0;
+                    
+                      for(let i = 2; i <= nbr; i++){
+                         //somme des deux derniers nombres
+                         somme = n1 + n2; 
+                         //assigner la dernière valeur à la première
+                         n1 = n2; 
+                         //attribuer la somme au dernier
+                         n2 = somme; 
+                      }
+                    
+                      return nbr ? n2 : n1;
+                   }
+                   
+                    function fibonacci(nbr) {
+                      if(nbr < 2){
+                        return nbr;
+                      }
+                      return fibonacci(nbr - 1) + fibonacci(nbr - 2);
+                    }
+                  //mixedtest.push(...filterThroughAdvancedInput(key, recipes, value))}
                   // avec ceci, j'ai seulement une union des filtres et non une intersection, soit un OU et non &&
                   // par contre crée un nouvel array à chaqye tag (venant de filters 51)
                   // comment faire pour garder que les intersections???
@@ -469,60 +506,7 @@ function search(){
                     //   -enlever les doubles
                     //   -afficher les résultats
 
-                    
-
-                //     if (value === "ustensils"){
-                //       const UsArray = recipes.filter(recipe => recipe.ustensils.some(app=> refit(app).includes(key)))
-                //       console.log("usArray", UsArray);
-                //       return UsArray
-                //   } else if(value === "appliance"){
-                //     const ApArray = recipes.filter(recipe => refit(recipe.appliance).includes(key))
-                //     console.log("ApArray", ApArray);
-                //     return ApArray
-                //   }
-                //   let mixedArray = [...UsArray,...ApArray]
-                //   const setMixes = [...new Set(mixedArray)]
-                //   console.log("set mixe", setMixes);
-
-                //     return setMixes
-                // }
-
-
-
-                //   c    if(tittle === "appliance"){
-                //     const filteredArrayAppliance = array.filter(recipe => refit(recipe.appliance).includes(refit(valeur)))
-                // console.log("filter appliance : ", filteredArrayAppliance)
-                // return filteredArrayAppliance
-                // }
-                // else if (tittle === "ustensils"){
-                //     const filteredArrayUstensils = array.filter(recipe => recipe.ustensils.some(app=> refit(app).includes(refit(valeur))))
-                //     console.log("filter ustensils : ", filteredArrayUstensils)
-                // return filteredArrayUstensils
-                // }
-                // else if (tittle === "ingredients"){
-                //     const filteredAdvancedArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(valeur))))
-                //     console.log("filter ingredients : ", filteredAdvancedArrayIngredients);
-                // return filteredAdvancedArrayIngredients
-                // }
-            
-
-                  // pour chaque tag, faire une liste de recette
-                  // pour chaque element de MAPTag, vérifier s'il y a des recette intersections
-                  //const filteredArray = array1.filter(value => array2.includes(value));
-                  //Map(2) {'blender' => 'appliance', 'cuillère à soupe' => 'ustensils'}
-                  // [[Entries]]
-                  // 0: {"blender" => "appliance"}
-                  // 1: {"cuillère à soupe" => "ustensils"}
-                  // size: 2
-                  // [[Prototype]]: Map
-                  
-
-
-
-
-
                 }
-              
               }
               
         }

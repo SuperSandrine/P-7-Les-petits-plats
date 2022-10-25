@@ -249,11 +249,14 @@ function search(){
       displayRecipes(arrayFromMainInput)
       displayItemsInButtonsBlocks(arrayFromMainInput)
       // console.log("mainInputFilled rempli : ", mainInputFilled);
-    } else if (event.target.value.length === 0){
+    } else if (event.target.value.length < 3){
+      // TODO: rajouter un message en dessous "écrire 3 caractères minimum"
       mainInputFilled =false
       displayRecipes(recipes)
       displayItemsInButtonsBlocks(recipes) //recipes s'il n'y a pas un autre array filtré en cours
-    } else{ console.log("attends")}
+    } 
+    // si un tru inférieur à trois
+    //else{ console.log("attends")}
     // TODO: que faire à la place de attends?
   })
 
@@ -407,91 +410,145 @@ function search(){
               // condition : ne pas cliquer sur le menu (dans les espaces autour des boutons)
               // et ne pas cliquer sur le bouton de tête (qui ferme la dropdown)
               // NICOLAS: quel est le else d'un fonction à un seul if?
-              if (((e.target).toString().indexOf('Menu') === -1)  &&
-              (!e.target.contains(li.firstChild)) /* button */ && 
-              (!e.target.contains(li.firstChild.firstChild)) /*son span*/ && 
-              (!e.target.contains(li.firstChild.firstChild.nextSibling)) /*son input*/ ){
+          if (((e.target).toString().indexOf('Menu') === -1)  &&
+          (!e.target.contains(li.firstChild)) /* button */ && 
+          (!e.target.contains(li.firstChild.firstChild)) /*son span*/ && 
+          (!e.target.contains(li.firstChild.firstChild.nextSibling)) /*son input*/ ){
               //console.log("button clické : ",e.target.innerText )
               //console.log('data récupéré: ', (e.target).getAttribute('data-advanced-filter'));
               // faire l'action:
               //    OK - afficher le tag (cf displayTag())
               //    OK - filtre recipes avec ce mot clef
-                displayTag(e.target.innerText, (e.target).getAttribute('data-advanced-filter'))
+            displayTag(e.target.innerText, (e.target).getAttribute('data-advanced-filter'))
 
-                let a = (e.target).getAttribute('data-advanced-filter')
-                let b = e.target.innerText
+            let a = (e.target).getAttribute('data-advanced-filter')
+            let b = e.target.innerText
                   //tagsArray.push({tittle : a, item:b})
                   //tagsSet.add({tittle : a, item:b})
-                  tagsMap.set(b,a)
-                  console.log("tagsMap",tagsMap)
+            tagsMap.set(b,a)
+            console.log("tagsMap",tagsMap)
 
-                if (tagCount==0){
-                displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))}
-                else if (tagCount>1 && tagCount<3){
-                  // TODO: créer un array spécial (paramètre pour displayRecipes)
+            if (tagCount===0){
+              // return displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
+              displayRecipes(recipes)
+              displayItemsInButtonsBlocks(recipes)
+            }else if (tagCount===1){
+              displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
+              displayItemsInButtonsBlocks(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
+            }
+            // else if (tagCount===2){
+            //       // TODO: créer un array spécial (paramètre pour displayRecipes)
 
-                  //ce que me retourne tagsMap
-                  //Map(2) {'blender' => 'appliance', 'cuillère à soupe' => 'ustensils'}
-                  // [[Entries]]
-                  // 0: {"blender" => "appliance"}
-                  // 1: {"cuillère à soupe" => "ustensils"}
-                  // size: 2
-                  // [[Prototype]]: Map
+            //       //ce que me retourne tagsMap
+            //       //Map(2) {'blender' => 'appliance', 'cuillère à soupe' => 'ustensils'}
+            //       // [[Entries]]
+            //       // 0: {"blender" => "appliance"}
+            //       // 1: {"cuillère à soupe" => "ustensils"}
+            //       // size: 2
+            //       // [[Prototype]]: Map
                   
-                  function intersection(first, second)
-                  {
-                      let s = new Set(second);
-                      return first.filter(item => s.has(item));
-                  };
+            //   function intersection(first, second){
+            //     let s = new Set(second);
+            //     return first.filter(item => s.has(item));
+            //     }
 
+            //   let mixedtest=[]
+            //   for (const [key, value] of tagsMap) {
+            //     mixedtest.push(filterThroughAdvancedInput(key, recipes, value))}
+            //     console.log("mixedtest1 juste filtré/pushé",mixedtest)
+            //         // j'ai du coup un tableau avec les recettes, avec des tableaux de chaque tri par tag
+            //     let newmix = intersection(mixedtest[mixedtest.length-2], mixedtest[mixedtest.length-1])
+            //     console.log("intersection",newmix);
+            //        //mixedtest.push(newmix)
+            //     displayRecipes(newmix)
+            //     displayItemsInButtonsBlocks(newmix)
+            //         // ça marche avec 2 mais pas avec 3, avec 3 ça ne prend en compte que les deux derniers index de mixedtest et l'index newmix a été écrasé.
+            //}
+            else if (tagCount>1){
+              let mixedtest2=[]
+              for (const [key, value] of tagsMap) {
+                mixedtest2.push(filterThroughAdvancedInput(key, recipes, value))}
+                console.log("quand plus de 3 tag, le tableau filtré", mixedtest2);
                 
+
+                // function intersection3(first, second){
+                //   let s = new Set(second);
+                //   return first.filter(item => s.has(item));
+                //   }
+
+
+                function intersection2(array){
+                  // tenter de factoriser cette fonction
+                  //let array0= array[0]
+                  //let array1= array[1]
+                  //let array2= array[2]
+                  let intersectionArray = array[0]
                   
+                  for (let i = 0; i < array.length-1; i++) {
+                  intersectionArray = array[i+1].filter(item => intersectionArray.includes(item))
+                  console.log('intersection', intersectionArray)}
 
-                  let mixedtest=[]
-                  for (const [key, value] of tagsMap) {
-                    mixedtest.push(filterThroughAdvancedInput(key, recipes, value))}
-                    console.log("mixedtest1 juste filtré/pushé",mixedtest)
-                    // j'ai du coup un tableau avec les recettes, avec des tableaux de chaque tri par tag
-                   let newmix = intersection(mixedtest[mixedtest.length-2], mixedtest[mixedtest.length-1])
-                   console.log("newmix",newmix);
-                   //mixedtest.push(newmix)
-                   displayRecipes(newmix)
-                   displayItemsInButtonsBlocks(newmix)
-                    // ça marche avec 2 mais pas avec 3, avec 3 ça ne prend en compte que les deux derniers index de mixedtest et l'index newmix a été écrasé.
-                  }else if (tagCount>3){
-                    let mixedtest2=[]
-                    for (const [key, value] of tagsMap) {
-                      mixedtest2.push(filterThroughAdvancedInput(key, recipes, value))}
-
-                      function intersection2(first, second)
-                  {
-                      let s = new Set(second);
-                      return first.filter(item => s.has(item));
-                  };
-
-                    function fibonacci(nbr) {
-                      var n1 = 0;
-                      var n2 = 1;
-                      var somme = 0;
+                  
+                
+                
+                  //   vvv ça marche
+                  //   let array0= array[0]
+                  //   let array1= array[1]
+                  //   let array2= array[2]
+                  //   let intersectionArray = []
                     
-                      for(let i = 2; i <= nbr; i++){
-                         //somme des deux derniers nombres
-                         somme = n1 + n2; 
-                         //assigner la dernière valeur à la première
-                         n1 = n2; 
-                         //attribuer la somme au dernier
-                         n2 = somme; 
-                      }
-                    
-                      return nbr ? n2 : n1;
-                   }
-                   
-                    function fibonacci(nbr) {
-                      if(nbr < 2){
-                        return nbr;
-                      }
-                      return fibonacci(nbr - 1) + fibonacci(nbr - 2);
-                    }
+                  //   intersectionArray = array1.filter(item => array0.includes(item))
+                  //   console.log('1ere intersection', intersectionArray)
+  
+                  //   intersectionArray = array2.filter(item => intersectionArray.includes(item))
+                  //   console.log('2eme intersection', intersectionArray)
+                  // ^^^ça marche
+
+                  // for(let i = 0; i <= array.length-2; i++){
+                  //   let array1= array[i]
+                  //   let array2= array[i+1]
+                  //   let s = new Set(array1);
+                  //   intersectionArray = array2.filter(item => s.has(item))
+                  //   console.log("in intersection 2, après filter", intersectionArray);
+                  //   //console.log("in intersection 2, après filter, array 2", array2);
+
+                  //   array1 = array2
+                  //   array2 = intersectionArray
+                  //   console.log("new array1",array1);
+                  //   console.log("new array2",array2);
+                  //   console.log("s",s);
+                  
+                  console.log("final", intersectionArray);
+                  return intersectionArray
+                };
+
+                //intersection2(mixedtest2)
+                  displayRecipes(intersection2(mixedtest2))
+                  displayItemsInButtonsBlocks(intersection2(mixedtest2))
+                  // POURQUOI ça MARCHE???
+
+                function fibonacci(nbr) {
+                  var n1 = 0;
+                  var n2 = 1;
+                  var somme = 0;
+                
+                  for(let i = 2; i <= nbr; i++){
+                      //somme des deux derniers nombres
+                      somme = n1 + n2; 
+                      //assigner la dernière valeur à la première
+                      n1 = n2; 
+                      //attribuer la somme au dernier
+                      n2 = somme; 
+                  }
+                  return nbr ? n2 : n1;
+                }
+                
+                function fibonacci2(nbr) {
+                  if(nbr < 2){
+                    return nbr;
+                  }
+                  return fibonacci2(nbr - 1) + fibonacci2(nbr - 2);
+                }
                   //mixedtest.push(...filterThroughAdvancedInput(key, recipes, value))}
                   // avec ceci, j'ai seulement une union des filtres et non une intersection, soit un OU et non &&
                   // par contre crée un nouvel array à chaqye tag (venant de filters 51)
@@ -499,16 +556,16 @@ function search(){
                   // j'ai deux lignes que je dois comparer pour retourner l'intersection
                   // je vide le tableau et push l'intersection dans le tableau
 
-
                     // chaque key/value de tagsMap, 
                     //   -filtrer l'array recette
                     //   -prendre le résultat et le mettre dans un array
                     //   -enlever les doubles
                     //   -afficher les résultats
 
-                }
               }
               
+          }
+            
         }
       })
     })
@@ -520,15 +577,13 @@ function search(){
       if (e.target.className.includes("far fa-times-circle")){
         //alors supprime le tag
         tagCount--
-        suppressTag(e)
+        suppressTag(e)}
         // et modifie le filtre en fonction 
-      } else {
-        console.log("pas supprimé");
-      }
+      // } else {
+      //   e.preventDefault()
+      //   console.log("pas supprimé");
+      // }
     })
-
-
-
 
 
 }

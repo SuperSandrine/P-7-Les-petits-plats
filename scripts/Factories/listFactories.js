@@ -114,7 +114,7 @@ export function createAListFactory(Datas){
         tagClosureI.className="far fa-times-circle"
         selectedTag.appendChild(textItem)
         selectedTag.appendChild(tagClosureButton)
-        tagClosureButton.appendChild(tagClosureI)
+        selectedTag.appendChild(tagClosureI)
 
     return selectedTag
     }

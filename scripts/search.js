@@ -65,10 +65,10 @@ function displayItemsInButtonsBlocks(array){
 }
 
 
-let tagCount=0
+//let tagCount=0
 function displayTag(item, itemTittleList){
   console.log("tag displayed : ",item)
-    tagCount++
+  //  tagCount++
     selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, itemTittleList))
 //  (item= buttoncliqué),
 //  (récupérer le titre de la liste au moement du clix) 
@@ -93,8 +93,9 @@ function displayTag(item, itemTittleList){
   // OK - append a child dans le container de tag
   // >> ne fait pas parti de la fonction display: s'ajoute au filtre de recheher
   // >> ne fait pas parti de la fonction display: click droix: Se remove et s'enlève des filtres
-  console.log("tagcount",tagCount);
-  return tagCount
+  //console.log("tagcount",tagCount);
+  //return tagCount
+  return
 }
 
 // suppress tag clicked 
@@ -103,9 +104,10 @@ function suppressTag(e){
   selectedTagContainer.removeChild(e.target.parentNode.parentNode)
   // pourquoi d'un coup il y a un parent en trop ???
   // doit aussi s'enlever des filtres, où?
-  tagCount--
-  console.log("tagcount", tagCount)
-  return tagCount
+  //tagCount--
+  //console.log("tagcount", tagCount)
+  //return tagCount
+  return
 }
 
 
@@ -350,18 +352,26 @@ function search(){
               //    OK - filtre recipes avec ce mot clef
             let itemTittleList = (e.target).getAttribute('data-advanced-filter')
             let item = e.target.innerText
-            displayTag(item, itemTittleList)
             tagsMap.set(item,itemTittleList)
             console.log("tagsMap",tagsMap)
+            selectedTagContainer.innerHTML=""
+            tagsMap.forEach((key, value) => displayTag(value,key))
+            //displayTag(item, itemTittleList)
+            console.log("input", e.target.value );
+            document.getElementById(`search-${itemTittleList}`).value="" // vide l'input
+
+            // tagsMap.set(item,itemTittleList)
+            // console.log("tagsMap",tagsMap)
             
-            if (tagCount===0){
+            //if (tagCount===0){
+            if (tagsMap.size===0){
               //on peut aussi utiliser la longueure de tagsMap.size === 0
               console.log( "tagsmaps longueur", tagsMap.size)
               // il n'y a pas te tag sélectionné
               // return displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
               displayRecipes(recipes)
               listBoutons = displayItemsInButtonsBlocks(recipes)
-            }else if (tagCount===1){
+            }else if (tagsMap.size===1){
               //on peut aussi utiliser la longueure de tagsMap.size === 1
               console.log( "tagsmaps longueur", tagsMap.size)
 
@@ -397,7 +407,9 @@ function search(){
             //     displayItemsInButtonsBlocks(newmix)
             //         // ça marche avec 2 mais pas avec 3, avec 3 ça ne prend en compte que les deux derniers index de mixedtest et l'index newmix a été écrasé.
             //}
-            else if (tagCount>1){
+            //else if (tagCount>1){
+            else if (tagsMap.size>1){
+
               //on peut aussi utiliser la longueure de tagsMap.size === 0
 
               // s'il y a plus de deux tags sélectionnés
@@ -471,20 +483,27 @@ function search(){
             // faire l'action:
             //    OK - afficher le tag (cf displayTag())
             //    OK - filtre recipes avec ce mot clef
-            displayTag(e.target.innerText, (e.target).getAttribute('data-advanced-filter'))
-            console.log(tagCount);
-              if (tagCount===0){
+            selectedTagContainer.innerHTML=""
+            tagsMap.forEach((key, value) => displayTag(value,key))
+            //displayTag(e.target.innerText, (e.target).getAttribute('data-advanced-filter'))
+            console.log("coombien de tags?: ", tagsMap.size);
+            document.getElementById(`search-${(e.target).getAttribute('data-advanced-filter')}`).value="" // vide l'input
+
+              //if (tagCount===0){
+                if (tagsMap.size===0){
                 //on peut aussi utiliser la longueure de tagsMap.size === 0
                 displayRecipes(filterThroughAdvancedInput(e.target.innerText, arrayFromMainInput, (e.target).getAttribute('data-advanced-filter')))
                 listBoutons = displayItemsInButtonsBlocks(filterThroughAdvancedInput(e.target.innerText, arrayFromMainInput, (e.target).getAttribute('data-advanced-filter')))
               } 
-                else if (tagCount===1){
+                //else if (tagCount===1){
+                else if (tagsMap.size===1){
                   //on peut aussi utiliser la longueure de tagsMap.size === 1    
                   // il y a un tag sélectionné
                   displayRecipes(filterThroughAdvancedInput(e.target.innerText, arrayFromMainInput, (e.target).getAttribute('data-advanced-filter')))
                   listBoutons = displayItemsInButtonsBlocks(filterThroughAdvancedInput(e.target.innerText, arrayFromMainInput, (e.target).getAttribute('data-advanced-filter')))
                 }
-                else if (tagCount>1){
+                //else if (tagCount>1){
+                else if (tagsMap.size>1){
                   //on peut aussi utiliser la longueure de tagsMap.size > 1
                   // s'il y a plus de deux tags sélectionnés
                   // je MAP mes tags (du coup les doublons ne sont pas pris en compte)

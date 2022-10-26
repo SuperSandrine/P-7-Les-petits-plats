@@ -76,6 +76,7 @@ export function createAListFactory(){
         divButtonSearchBar.setAttribute('data-advanced-filter', element)
         divButtonSearchBar.setAttribute('id',`search-${element}`)
         divButtonSearchBar.setAttribute('placeholder',`Rechercher dans ${element}`)
+        // mettre une valeur par défaut
         const menuBlock = document.createElement('menu')
         menuBlock.setAttribute('class',`${element}-color`)
         menuBlock.setAttribute('id',`${element}-list`)

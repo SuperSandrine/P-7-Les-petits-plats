@@ -19,6 +19,7 @@ import { recipes } from "../../data/recipes.js"
 
 
 // change input text and datas to find a match despite space or case values
+
 const refit = (x => x.trim().toLowerCase())
 
 // renvoie une liste de recettes
@@ -43,6 +44,33 @@ export function filterThroughMainInput(e, array){
     // const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
     
 
+    // il ne faudrait pas que ça cherche dans recipe, mais plutôt dans l'array qui affiche les listes
+export function filterAdvancedItemsListThroughAdvancedInput(valeur, tittle, arraydeslistes){
+    if(tittle === "appliance"){
+        const filteredWithInputInAppliance = (arraydeslistes.appliance).filter(item => item.includes(refit(valeur)))
+    //console.log("filter appliance : ", filteredWithInputInAppliance)
+    return filteredWithInputInAppliance
+    } 
+    // appliance ça marche car un seul appliance par recette
+
+    else if (tittle === "ustensils"){
+
+        const filteredWithInputInUstensils = (arraydeslistes.ustensils).filter(item => item.includes(refit(valeur)))
+        //console.log("ça marche ", filteredWithInputInUstensils);
+        //const filteredArrayUstensils = array.filter(recipe => recipe.ustensils.some(app=> refit(app).includes(refit(valeur))))
+        //console.log("comment ça marche 1:", recipes[0].ustensils);
+        //console.log("filter ustensils : ", filteredArrayUstensils)
+    return filteredWithInputInUstensils
+    }
+    else if (tittle === "ingredients"){
+//        console.log("araydeslistes.ingredients", arraydeslistes.ingredients);
+        const filteredWithInputInIngredients = (arraydeslistes.ingredients).filter(item => item.includes(refit(valeur)))
+        //console.log("filter ingredients : ", filteredWithInputInIngredients);
+    return filteredWithInputInIngredients
+    }
+}
+
+
 // - trouver le moyen de conditionner le filtre à appliquer en fonction de l'input
 // renvoie une liste de recettes (veleur peut être e.target de input ou de click)
 export function filterThroughAdvancedInput(valeur, array, tittle){
@@ -62,6 +90,8 @@ export function filterThroughAdvancedInput(valeur, array, tittle){
     return filteredAdvancedArrayIngredients
     }
 }
+
+
 
 
 

@@ -23,10 +23,10 @@ const advancedFiltersMenu= document.getElementById('advancedFilters-list')
 // crée un tableau des titres des listes pour affichage en tête de liste
 // TODO: faire un destructuring?
 export function createList(array){
+    const listTitleIng = (Object.keys(array[0]))[3]
     const listTitleApp = (Object.keys(array[0]))[6]
     const listTitleUst = (Object.keys(array[0]))[7]
-    const listTitleIng = (Object.keys(array[0]))[3]
-    const listTitles = [ listTitleApp,listTitleUst,listTitleIng]
+    const listTitles = [ listTitleIng,listTitleApp,listTitleUst]
 //    console.log(listTitles)
     return listTitles
 }
@@ -35,7 +35,7 @@ export function createList(array){
 // le paramètre est l'ensemble des recettes mapé par recette, donc recipeDatas= 1 recette
 // ou en paramètre est mis une liste mapé, donc on travaille par élément de cette liste
 // se renseigner sur les fonctions imbriqués: https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Functions#fonctions_imbriqu%C3%A9es_et_fermetures 
-export function createAListFactory(Datas){
+export function createAListFactory(){
 
     // array = recipes ou recipes filtré
     function makeLists(array){
@@ -54,6 +54,7 @@ export function createAListFactory(Datas){
         appliance: applianceItemsList,
         ustensils: ustensilsItemsList,
         }
+        //console.log("test 1", advancedFiltersLists.ustensils);
         return advancedFiltersLists
     }
 
@@ -114,7 +115,7 @@ export function createAListFactory(Datas){
         tagClosureI.className="far fa-times-circle"
         selectedTag.appendChild(textItem)
         selectedTag.appendChild(tagClosureButton)
-        selectedTag.appendChild(tagClosureI)
+        tagClosureButton.appendChild(tagClosureI)
 
     return selectedTag
     }

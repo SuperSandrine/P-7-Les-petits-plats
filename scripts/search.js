@@ -24,9 +24,15 @@ console.log(recipes)
 // affiche les recettes une par une à partir d'un array de recette trié ou non
 function displayRecipes(array){
   recipesContainer.innerHTML = " "
+  console.log ('type de array', typeof(array))
+  //console.log ('map length ds displayRecipes: ', array.size)
+
   console.log ('array length ds displayRecipes: ', array.length)
   // ajouter genre null et undefined dans la condition array.length?
   if (array.length !== 0 ){
+//  if (array.length !== 0 || array.size !==0 ){
+  //if ( array.size !==0 ){
+
     noResultsContainer.style.display="none"
     array.map( recipe => recipesContainer.appendChild(createARecipeFactory(recipe).getRecipeCard()))
 //  const allRecipes = array.map( recipe => recipesContainer.appendChild(createARecipeFactory(recipe).getRecipeCard()))
@@ -67,7 +73,7 @@ function displayItemsInButtonsBlocks(array){
 
 //let tagCount=0
 function displayTag(item, itemTittleList){
-  console.log("tag displayed : ",item)
+  //console.log("tag displayed : ",item)
   //  tagCount++
     selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, itemTittleList))
 //  (item= buttoncliqué),
@@ -355,9 +361,12 @@ function search(){
             tagsMap.set(item,itemTittleList)
             console.log("tagsMap",tagsMap)
             selectedTagContainer.innerHTML=""
-            tagsMap.forEach((key, value) => displayTag(value,key))
+
+            //tagsMap.forEach((key, value) => console.log("test alpha", key+ value)) // ingredient lait de coco
+            tagsMap.forEach((itemTittL, ItM) => displayTag(ItM,itemTittL))
+
             //displayTag(item, itemTittleList)
-            console.log("input", e.target.value );
+            //console.log("input", e.target.value );
             document.getElementById(`search-${itemTittleList}`).value="" // vide l'input
 
             // tagsMap.set(item,itemTittleList)
@@ -365,6 +374,7 @@ function search(){
             
             //if (tagCount===0){
             if (tagsMap.size===0){
+              console.log("tagmaps à 0", tagsMap);
               //on peut aussi utiliser la longueure de tagsMap.size === 0
               console.log( "tagsmaps longueur", tagsMap.size)
               // il n'y a pas te tag sélectionné
@@ -373,11 +383,21 @@ function search(){
               listBoutons = displayItemsInButtonsBlocks(recipes)
             }else if (tagsMap.size===1){
               //on peut aussi utiliser la longueure de tagsMap.size === 1
+              console.log("tagmaps à 1", tagsMap);
               console.log( "tagsmaps longueur", tagsMap.size)
+              //console.log("velue",tagsMap.values);
+              //console.log("clef",tagsMap.keys);
+              tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
 
+              tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedInput(item, recipes, itemTittleList)))
+              tagsMap.forEach((itemTittleList, item) => listBoutons = displayItemsInButtonsBlocks(filterThroughAdvancedInput(item, recipes, itemTittleList)))
+              //console.log("listeBoutons",listBoutons);
               // il y a un tag sélectionné
-              displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
-              listBoutons = displayItemsInButtonsBlocks(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
+              //displayRecipes(tagsMap.forEach((value, key) => filterThroughAdvancedInput(key, recipes, value)))
+              //listBoutons = displayItemsInButtonsBlocks(tagsMap.forEach((value, key) => filterThroughAdvancedInput(key, recipes, value)))
+
+              // displayRecipes(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
+              // listBoutons = displayItemsInButtonsBlocks(filterThroughAdvancedInput(e.target.innerText, recipes, (e.target).getAttribute('data-advanced-filter')))
             }
             // else if (tagCount===2){
             //       // TODO: créer un array spécial (paramètre pour displayRecipes)
@@ -761,22 +781,91 @@ function search(){
           }
         })
       })
+      window.addEventListener('click', () => {
+        foldDropdown(advancedFiltersLi)
+      })
+      window.addEventListener('click', (e)=>{console.log(e.target.className.includes("far fa-times-circle"));
+        if (e.target.className.includes("far fa-times-circle")){
+          //alors supprime le tag
+          suppressTag(e)
+          tagsMap.delete(e.target.parentNode.parentNode.innerText)
+          //tagsMap.delete(e.target.parentNode.parentNode.innerText)
+          //console.log((e.target.parentNode.parentNode))
+          //console.log((e.target.parentNode.parentNode.innerText))
+          //tagsMap.delete(e.target.parentNode.parentNode.innerText)
+          // ok ça vide tagsMap, et après???
+          //est-ce qu'il faut que tout l'affichage soit paramétré sur tagsMap?
+          //console.log('la tag Map', tagsMap.delete((e.target.parentNode.parentNode.innerText)));
+          if (tagsMap.size==0){
+          // if (tagsMap.delete(e.target.parentNode.parentNode.innerText)===true && tagsMap.size==0){
+            displayRecipes(recipes)
+            displayItemsInButtonsBlocks(recipes)
+          }
+          else if (tagsMap.size===1){
+            //on peut aussi utiliser la longueure de tagsMap.size === 1
+            console.log("tagmaps à 1", tagsMap);
+            console.log( "tagsmaps longueur", tagsMap.size)
+            //console.log("velue",tagsMap.values);
+            //console.log("clef",tagsMap.keys);
+            tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
+
+            tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedInput(item, recipes, itemTittleList)))
+            tagsMap.forEach((itemTittleList, item) => listBoutons = displayItemsInButtonsBlocks(filterThroughAdvancedInput(item, recipes, itemTittleList)))
+          }
+          else if (tagsMap.size>1){
+            //on peut aussi utiliser la longueure de tagsMap.size > 1
+            // s'il y a plus de deux tags sélectionnés
+            // je MAP mes tags (du coup les doublons ne sont pas pris en compte)
+            // à chaque clic sur tag, une liste de recette est crée et ajouté à l'array mixedtest2. 
+            let mixedtest2=[]
+            for (const [key, value] of tagsMap) {
+              mixedtest2.push(filterThroughAdvancedInput(key, recipes, value))}
+              console.log("quand plus de 1 tag, le tableau filtré", mixedtest2);
+              // l'array mixedtest2 se composent d'un index par tag
+              // dans chaque index il y a un tableau des résultats du filtre sur toutes les recettes
 
 
-    window.addEventListener('click', () => {
-      foldDropdown(advancedFiltersLi)
-    })
-    window.addEventListener('click', (e)=>{console.log(e.target.className.includes("far fa-times-circle"));
-      if (e.target.className.includes("far fa-times-circle")){
-        //alors supprime le tag
-        suppressTag(e)}
-        // et modifie le filtre en fonction 
-      // } else {
-      //   e.preventDefault()
-      //   console.log("pas supprimé");
-      // }
-    })
+              function intersection2(array){
+                // cette fonction va vérifier l'intersection entre chaque tableau et la renvoyer
+                let intersectionArray = array[0]
+                // pour chaque index, je compare l'index suivant avec le premier index, ensuite je compare l'index suivant avec l'intersection précédente, j'obtiens les intersections entre tous les tags
+                for (let i = 0; i < array.length-1; i++) {
+                intersectionArray = array[i+1].filter(item => intersectionArray.includes(item))
+                //console.log('intersection', intersectionArray)
+              }
+              
+                // la fonction actuelle est une refactorisation de ceci:
+                //   vvv ça marche----------------
+                //   let array0= array[0]
+                //   let array1= array[1]
+                //   let array2= array[2]
+                //   let intersectionArray = []
+                  
+                //   intersectionArray = array1.filter(item => array0.includes(item))
+                //   console.log('1ere intersection', intersectionArray)
 
+                //   intersectionArray = array2.filter(item => intersectionArray.includes(item))
+                //   console.log('2eme intersection', intersectionArray)
+                // ^^^ça marche----------------
+                
+                //console.log("final", intersectionArray);
+                return intersectionArray
+              };
+
+                displayRecipes(intersection2(mixedtest2))
+                listBoutons = displayItemsInButtonsBlocks(intersection2(mixedtest2))
+            }
+
+
+
+
+          ;}
+          // et modifie le filtre en fonction 
+        // } else {
+        //   e.preventDefault()
+        //   console.log("pas supprimé");
+        // }
+      })
 
 }
 

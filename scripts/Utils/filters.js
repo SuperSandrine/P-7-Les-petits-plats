@@ -73,7 +73,7 @@ export function filterAdvancedItemsListThroughAdvancedInput(valeur, tittle, arra
 
 // - trouver le moyen de conditionner le filtre à appliquer en fonction de l'input
 // renvoie une liste de recettes (veleur peut être e.target de input ou de click)
-export function filterThroughAdvancedInput(valeur, array, tittle){
+export function filterThroughAdvancedField(valeur, array, tittle){
     if(tittle === "appliance"){
         const filteredArrayAppliance = array.filter(recipe => refit(recipe.appliance).includes(refit(valeur)))
     console.log("filter appliance : ", filteredArrayAppliance)

@@ -58,7 +58,6 @@ export function createAListFactory(){
         return advancedFiltersLists
     }
 
-    // const { id, name, ingredients , time, description, appliance, ustensils} = recipeDatas  
 
     // en paramètre element est le titre de la liste: appliance, ustensils ou ingredients
     // fabrique la partie bouton de tête de liste

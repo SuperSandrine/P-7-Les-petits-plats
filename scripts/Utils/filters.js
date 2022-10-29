@@ -14,6 +14,35 @@ export function filterThroughMainInput(e, array){
     return setOfMainSearchInput
 }
 
+// renvoie une liste de recettes filtrés en de event (e.tagert.value)
+export function loopThroughMainInput(e, array){
+    let mixedShortenedArray=[]
+
+    for (let i = 0; i < array.length; i++) {
+        if (refit(array[i].description).includes(refit(e.target.value))===true){
+            if (!mixedShortenedArray.includes(array[i])){
+            mixedShortenedArray.push(array[i])
+        }
+    }
+        else if (refit(array[i].name).includes(refit(e.target.value))===true){
+            if (!mixedShortenedArray.includes(array[i])){
+                mixedShortenedArray.push(array[i])
+            }
+        }
+        for (let j = 0; j < array[i].ingredients.length; j++){
+            if(refit(array[i].ingredients[j].ingredient).includes(refit(e.target.value))===true){
+                if (!mixedShortenedArray.includes(array[i])){
+                    mixedShortenedArray.push(array[i])
+                }
+            }
+        }
+    }
+    console.log("mixed test", mixedShortenedArray);
+    return mixedShortenedArray
+}
+
+
+
 // du tableau de liste, 
 // recherche une suite de caractère venant d'un input dit valeur (e.target.value) 
 // et renvoie une liste filtrée d'items

@@ -1,7 +1,7 @@
 import { recipes } from '../data/recipes.js'
 import { createAListFactory, createList } from './Factories/listFactories.js'
 import { createARecipeFactory } from './Factories/recipefactories.js'
-import { filterThroughMainInput, filterThroughAdvancedField, filterAdvancedItemsListThroughAdvancedInput, intersection2 } from './Utils/filters.js'
+import { filterThroughMainInput, filterThroughAdvancedField, filterAdvancedItemsListThroughAdvancedInput, intersection2, loopThroughMainInput } from './Utils/filters.js'
 import { foldDropdown, unfoldAndFoldDropdown } from './Utils/dropdown.js'
 
 
@@ -104,7 +104,8 @@ function search(){
     tagsMap.clear()
     if (event.target.value.length > 2){
       mainInputFilled = true
-      arrayFromMainInput = filterThroughMainInput(event, recipes)
+      arrayFromMainInput = loopThroughMainInput(event, recipes)
+
       displayRecipes(arrayFromMainInput)
       filteredListsAdvancedField = displayItemsInButtonsBlocks(arrayFromMainInput)
       // console.log("mainInputFilled rempli : ", mainInputFilled);
@@ -279,28 +280,4 @@ function search(){
 }
 
 search()
-
-
-
-// Refactoriser le code de la recherche :
-//   >une fonction générale qui filtre et affiche les recettes en prenant en compte :
-//      OK-l'input de recherche (si renseigné) 
-//      -le filtre applicances (si renseigné) 
-//      -le filtre ustensils (si renseigné) 
-//      -le filtre ingredients (si renseigné)
-//   OK>Quand on saisit dans l'input de recherche, les filtres sont mis à jour
-//   OK>Quand on saisit dans l'input d'un filtre, cela met le filtre concerné à jour
-//   >Quand on clique sur un filtre, on appelle la fonction générale qui filtre et affiche les recettes
-//         -Optionnel : cela met également à jour les autres filtres
-
-// problème de gestion de l'array qui filtre pour affichage, comment le creer?
-// comment cumuler des filtres?
-// méthode de filterde main Input?
-// on recherche par gang , on met dans 1 tableau et on supprime les doublons:
-//    soit une fonction qui s'active dès qu'il y a plus d'un tag
-//    dès qu'il y a 2 tag : cherche toutes les recette de tag1= crée un tableau, 
-//                          puis de tag2=crée un tableau
-//                          puis ajoute les tableaux (spread)
-//                          puis supprime les doubles
-//                          puis affiche
 

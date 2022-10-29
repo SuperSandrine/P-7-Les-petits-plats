@@ -103,6 +103,8 @@ function search(){
     selectedTagContainer.innerHTML=""
     tagsMap.clear()
     if (event.target.value.length > 2){
+      mainInput.parentElement.removeAttribute("data-error-visible", true);
+      
       mainInputFilled = true
       arrayFromMainInput = filterThroughMainInput(event, recipes)
       displayRecipes(arrayFromMainInput)
@@ -110,6 +112,7 @@ function search(){
       // console.log("mainInputFilled rempli : ", mainInputFilled);
     } else if (event.target.value.length < 3){
       // TODO: rajouter un message en dessous "écrire 3 caractères minimum"
+      mainInput.parentElement.setAttribute("data-error-visible", true);
       mainInputFilled =false
       displayRecipes(recipes)
       filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes) //recipes s'il n'y a pas un autre array filtré en cours
@@ -141,7 +144,7 @@ function search(){
   advancedFiltersLi.forEach(li => {
     li.addEventListener('click', (e) => {
       e.stopPropagation()
-      unfoldAndFoldDropdown(li, e)        
+      unfoldAndFoldDropdown(li, e, advancedFiltersLi)        
       if (mainInputFilled===false){
         // console.log('e.target', e.target);
         // le champs MainInput n'est pas renseigné
@@ -282,25 +285,4 @@ search()
 
 
 
-// Refactoriser le code de la recherche :
-//   >une fonction générale qui filtre et affiche les recettes en prenant en compte :
-//      OK-l'input de recherche (si renseigné) 
-//      -le filtre applicances (si renseigné) 
-//      -le filtre ustensils (si renseigné) 
-//      -le filtre ingredients (si renseigné)
-//   OK>Quand on saisit dans l'input de recherche, les filtres sont mis à jour
-//   OK>Quand on saisit dans l'input d'un filtre, cela met le filtre concerné à jour
-//   >Quand on clique sur un filtre, on appelle la fonction générale qui filtre et affiche les recettes
-//         -Optionnel : cela met également à jour les autres filtres
-
-// problème de gestion de l'array qui filtre pour affichage, comment le creer?
-// comment cumuler des filtres?
-// méthode de filterde main Input?
-// on recherche par gang , on met dans 1 tableau et on supprime les doublons:
-//    soit une fonction qui s'active dès qu'il y a plus d'un tag
-//    dès qu'il y a 2 tag : cherche toutes les recette de tag1= crée un tableau, 
-//                          puis de tag2=crée un tableau
-//                          puis ajoute les tableaux (spread)
-//                          puis supprime les doubles
-//                          puis affiche
 

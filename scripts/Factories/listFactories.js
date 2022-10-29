@@ -27,7 +27,6 @@ export function createList(array){
     const listTitleApp = (Object.keys(array[0]))[6]
     const listTitleUst = (Object.keys(array[0]))[7]
     const listTitles = [ listTitleIng,listTitleApp,listTitleUst]
-//    console.log(listTitles)
     return listTitles
 }
 

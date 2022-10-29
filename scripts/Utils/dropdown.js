@@ -6,13 +6,15 @@ export function foldDropdown (elementMenu) {
     }
 }
 
-export function unfoldAndFoldDropdown(li, e){
+// sur li il y a un addEventListener "click"
+export function unfoldAndFoldDropdown(li, e, list){
     if (li.classList.contains('active') && (li.firstChild === e.target)){
         li.classList.remove('active')
-    }else if(!li.classList.contains('active')){
+    // }else if(!li.classList.contains('active')){
+    //     li.classList.add('active') // permet d'avoir toutes les listes affichées en même (sans le else suivant)
+    }else {
+        list.forEach(currentLi =>{currentLi.classList.remove('active')})
         li.classList.add('active')
     }
 }
-
-
 

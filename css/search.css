@@ -42,8 +42,26 @@ header {
 
 #searchBar-container {
   position: relative;
-  padding-bottom: 25px;
+  padding-bottom: 5px;
 }
+.searchBar[data-error]::after {
+  content: attr(data-error);
+  font-size: 0.6em;
+  color: #e54858;
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  text-align: left;
+  line-height: 0.9;
+  opacity: 0;
+  transition: 0.3s;
+}
+.searchBar[data-error-visible="true"]::after {
+  opacity: 1;
+}
+/* .formData[data-error-visible="true"] .text-control {
+  border: 2px solid #e54858;
+} */
 
 #searchBar {
   width: 100%;

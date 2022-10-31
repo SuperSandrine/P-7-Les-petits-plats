@@ -21,7 +21,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h3 align="center">Développez un algorithme de recherche en JavaScript</h3>
+  <h1 align="center">Développez un algorithme de recherche en JavaScript</h1>
 
   <p align="center">
     Open-Classroom, P7/14, Formation Développeur Front-End, Javascript React mars2022/mai2023
@@ -79,7 +79,7 @@ Votre première mission sera donc d’implémenter la fonctionnalité de recherc
 - <a href="./readmeAssets/Cas+d’utilisation+Filtrer+les+recettes+dans+l’interface+utilisateur.pdf">La descrtiption du cas d'utilisation de recherche</a>
 - <a href="./data/recipes.js">Un fichier contenant une base de 50 recettes</a>
 
-<img src="./readmeAssets/maquette.png" alt="apperçu de la maquette>
+<img src="readmeAssets/maquette.png" alt="apperçu de la maquette">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

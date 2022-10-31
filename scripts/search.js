@@ -41,7 +41,7 @@ function displayListButtons(array){
 // il faudrait d'abord créer la liste (des items à mettre dans les boutons)
 // et ensuite afficher les items dans les boutons un par un en suivant cette liste d'items filtrés ou non
 // on récupère la liste de listes d'items filtrés pour ajouter des filtres sur cette liste
-function displayItemsInButtonsBlocks(array){
+function displayItemsInButtonsBlocks(array,cible){
   const advancedFiltersLists = createAListFactory().makeLists(array)
   console.log("advancedFiltersLists : ", advancedFiltersLists)
   for(const title in advancedFiltersLists){
@@ -49,23 +49,66 @@ function displayItemsInButtonsBlocks(array){
     const menuBlock = document.querySelector(`menu #${title}-list`)
     menuBlock.innerHTML=" "
     advancedFiltersLists[title].map(item => createAListFactory().getListTemplate(item, title))
+    //console.log("je compte pour 1 fois", cible);
+    
+    
     //const listapp3 = advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
     // TODO : peut-^tre pas besoin de map mais for each
   }
+  // if (cible){
+  //   console.log("test");
+  //   cible.remove()
+  //   }
+  //cherche à supprimer le bouton cliqké de la liste
+  // si tagsmaps est >0, si tagsmaps.has('la e.target')
+  // alors remove la e.target de la l'affichage
+  // OU
+  // if (tagsMap>0){
+  //   tagsMap.forEach((a,b)=> console.log(a, b));
+  //   tagsMap.forEach((a,b)=>{ if (advancedFiltersItemsButtons.innerText == b){
+  //     advancedFiltersItemsButtons.remove()}})
+  // }
   return advancedFiltersLists
 }
 
+// si un item est présent dans les tags
+// alors le supprimer des listes
+function suppressItemsClickedFromButtonsBlock(tagsList){
+  if (tagsList.size ===1){
+    let itemToSuppress 
+    for (const key of tagsList.keys()) {
+      itemToSuppress = key
+    }
+    const displayedList= document.querySelectorAll("div > menu > li > menu > li > button")
+    for (const button of displayedList) {
+      if (button.innerText.includes(itemToSuppress)) {
+        button.remove()
+      }
+    }
+  }
+  else if (tagsList.size >1){
+    // tagsList.forEach((ListTittle,Item) => console.log("ListTittle/Item",ListTittle + "/"+ Item))   // renvoie : ListTittle/Item ingredients/lait de coco
+    const displayedList= document.querySelectorAll("div > menu > li > menu > li > button")
+    tagsList.forEach((ListTittle,Item) => {
+    for (const button of displayedList) {
+      if (button.innerText.includes(Item)) {
+        button.remove()
+      }
+    }})
+  }
+}
+
+// affiche le tag cliqué
 function displayTag(item, itemTittleList){
   //console.log("tag displayed : ",item)
   selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, itemTittleList))
   return
 }
 
-// supprime l'affichage du tag clické
+// supprime de l'affichage le tag cliquéé
 function suppressTag(e){
   //console.log(e.target.parentNode.parentNode);
   selectedTagContainer.removeChild(e.target.parentNode.parentNode)
-  // TODO: doit aussi s'enlever des filtres, où?
   return
 }
 
@@ -77,7 +120,7 @@ displayListButtons(recipes)
 // ce selector doit être activé après l'affichage des boutons de listes
 // la classe .active se fait sur li
 const advancedFiltersLi = document.querySelectorAll("div > menu > li"); 
-
+// const advancedFiltersItemsButtons = document.querySelectorAll("div > menu > li >menu >li >button"); 
 
 displayRecipes(recipes)
 let filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
@@ -119,9 +162,9 @@ function search(){
     }
   })
 
+  const advancedFiltersItemsButtons = document.querySelectorAll("div > menu > li >menu >li >button"); 
   //console.log("arrayFromMainInput : ", arrayFromMainInput);
   //console.log("mainInputFilled plein? : ", mainInputFilled);
-
   const advancedFiltersInput = document.querySelectorAll("div > menu > li > button > input"); 
   advancedFiltersInput.forEach( input => {
     input.addEventListener('input', (event) =>{
@@ -146,7 +189,7 @@ function search(){
       e.stopPropagation()
       unfoldAndFoldDropdown(li, e, advancedFiltersLi)        
       if (mainInputFilled===false){
-        // console.log('e.target', e.target);
+        console.log('e.target', e.target);
         // le champs MainInput n'est pas renseigné
         // TODO: mettre ce qui suit dans une fonction ?
         // condition : ne pas cliquer sur le menu (dans les espaces autour des boutons)
@@ -162,15 +205,22 @@ function search(){
           selectedTagContainer.innerHTML=""
           tagsMap.forEach((itemTittL, ItM) => displayTag(ItM,itemTittL))
           document.getElementById(`search-${itemTittleList}`).value="" // vide l'input
+          //e.target.remove() // ça marche mais, au click la liste est actualisée avec les éléments des recettes filtrées
+          let target = e.target
 
           if (tagsMap.size===0){
             // il n'y a pas de tag sélectionné
+            ;
             displayRecipes(recipes)
             filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
+            ;
           }else if (tagsMap.size===1){
+            
             //tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
             tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedField(item, recipes, itemTittleList)))
-            tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList)))
+            tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList), target))
+            suppressItemsClickedFromButtonsBlock(tagsMap)
+          
           }else if (tagsMap.size>1){
             // s'il y a plus de deux tags sélectionnés
             // je MAP mes tags (du coup les doublons ne sont pas pris en compte)
@@ -186,6 +236,7 @@ function search(){
             
             displayRecipes(intersection2(mixedtest2))
             filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(mixedtest2))
+            suppressItemsClickedFromButtonsBlock(tagsMap)
           }
         }
       }
@@ -214,7 +265,8 @@ function search(){
             // il y a un tag sélectionné
               displayRecipes(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
               filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
-              
+              suppressItemsClickedFromButtonsBlock(tagsMap)
+
             }else if (tagsMap.size>1){
             // s'il y a plus de deux tags sélectionnés
               let mixedtest2=[]
@@ -224,6 +276,8 @@ function search(){
               
               displayRecipes(intersection2(mixedtest2))
               filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(mixedtest2))
+              suppressItemsClickedFromButtonsBlock(tagsMap)
+
             }
           }
         }
@@ -248,6 +302,8 @@ function search(){
             //tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
             tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedField(item, recipes, itemTittleList)))
             tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList)))
+            suppressItemsClickedFromButtonsBlock(tagsMap)
+
           }else if (tagsMap.size>1){
             // si dans le reste, il y a au moins deux tags sélectionnés
             let mixedtest2=[]
@@ -256,6 +312,8 @@ function search(){
             }
             displayRecipes(intersection2(mixedtest2))
             filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(mixedtest2))
+            suppressItemsClickedFromButtonsBlock(tagsMap)
+
           }
         } else if (mainInputFilled === true){
           if (tagsMap.size==0){
@@ -266,6 +324,8 @@ function search(){
               //tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
               tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedField(item, arrayFromMainInput, itemTittleList)))
               tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, arrayFromMainInput, itemTittleList)))
+              suppressItemsClickedFromButtonsBlock(tagsMap)
+
             }else if (tagsMap.size>1){
               // si dans le reste, il y a au moins deux tags sélectionnés
               let mixedtest2=[]
@@ -274,9 +334,10 @@ function search(){
               }
               displayRecipes(intersection2(mixedtest2))
               filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(mixedtest2))
+              suppressItemsClickedFromButtonsBlock(tagsMap)
+
             }
         }
-      
       }
   })
 }

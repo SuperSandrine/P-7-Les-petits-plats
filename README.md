@@ -21,7 +21,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h1 align="center">Développez un algorithme de recherche en JavaScript</h1>
+  <h3 align="center">Développez un algorithme de recherche en JavaScript</h3>
 
   <p align="center">
     Open-Classroom, P7/14, Formation Développeur Front-End, Javascript React mars2022/mai2023

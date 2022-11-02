@@ -41,7 +41,7 @@ function displayListButtons(array){
 // il faudrait d'abord créer la liste (des items à mettre dans les boutons)
 // et ensuite afficher les items dans les boutons un par un en suivant cette liste d'items filtrés ou non
 // on récupère la liste de listes d'items filtrés pour ajouter des filtres sur cette liste
-function displayItemsInButtonsBlocks(array,cible){
+function displayItemsInButtonsBlocks(array){
   const advancedFiltersLists = createAListFactory().makeLists(array)
   console.log("advancedFiltersLists : ", advancedFiltersLists)
   for(const title in advancedFiltersLists){
@@ -49,63 +49,19 @@ function displayItemsInButtonsBlocks(array,cible){
     const menuBlock = document.querySelector(`menu #${title}-list`)
     menuBlock.innerHTML=" "
     advancedFiltersLists[title].map(item => createAListFactory().getListTemplate(item, title))
-    //console.log("je compte pour 1 fois", cible);
-    
-    
     //const listapp3 = advancedFiltersLists[key].map(item => {createAListFactory(item).getListTemplate(item, key)
     // TODO : peut-^tre pas besoin de map mais for each
   }
-  // if (cible){
-  //   console.log("test");
-  //   cible.remove()
-  //   }
-  //cherche à supprimer le bouton cliqké de la liste
-  // si tagsmaps est >0, si tagsmaps.has('la e.target')
-  // alors remove la e.target de la l'affichage
-  // OU
-  // if (tagsMap>0){
-  //   tagsMap.forEach((a,b)=> console.log(a, b));
-  //   tagsMap.forEach((a,b)=>{ if (advancedFiltersItemsButtons.innerText == b){
-  //     advancedFiltersItemsButtons.remove()}})
-  // }
   return advancedFiltersLists
 }
 
-// si un item est présent dans les tags
-// alors le supprimer des listes
-function suppressItemsClickedFromButtonsBlock(tagsList){
-  if (tagsList.size ===1){
-    let itemToSuppress 
-    for (const key of tagsList.keys()) {
-      itemToSuppress = key
-    }
-    const displayedList= document.querySelectorAll("div > menu > li > menu > li > button")
-    for (const button of displayedList) {
-      if (button.innerText.includes(itemToSuppress)) {
-        button.remove()
-      }
-    }
-  }
-  else if (tagsList.size >1){
-    // tagsList.forEach((ListTittle,Item) => console.log("ListTittle/Item",ListTittle + "/"+ Item))   // renvoie : ListTittle/Item ingredients/lait de coco
-    const displayedList= document.querySelectorAll("div > menu > li > menu > li > button")
-    tagsList.forEach((ListTittle,Item) => {
-    for (const button of displayedList) {
-      if (button.innerText.includes(Item)) {
-        button.remove()
-      }
-    }})
-  }
-}
-
-// affiche le tag cliqué
 function displayTag(item, itemTittleList){
   //console.log("tag displayed : ",item)
   selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, itemTittleList))
   return
 }
 
-// supprime de l'affichage le tag cliquéé
+// supprime de l'affichage le tag clické
 function suppressTag(e){
   //console.log(e.target.parentNode.parentNode);
   selectedTagContainer.removeChild(e.target.parentNode.parentNode)
@@ -120,7 +76,7 @@ displayListButtons(recipes)
 // ce selector doit être activé après l'affichage des boutons de listes
 // la classe .active se fait sur li
 const advancedFiltersLi = document.querySelectorAll("div > menu > li"); 
-// const advancedFiltersItemsButtons = document.querySelectorAll("div > menu > li >menu >li >button"); 
+
 
 displayRecipes(recipes)
 let filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
@@ -142,12 +98,11 @@ function search(){
 
   mainInput.addEventListener('input', (event) =>{
     event.stopPropagation()
-    console.log("main input event", event)
+    console.log("main input event", event.target.value)
     selectedTagContainer.innerHTML=""
     tagsMap.clear()
     if (event.target.value.length > 2){
       mainInput.parentElement.removeAttribute("data-error-visible", true);
-      
       mainInputFilled = true
       arrayFromMainInput = filterThroughMainInput(event, recipes)
       displayRecipes(arrayFromMainInput)
@@ -165,6 +120,7 @@ function search(){
   const advancedFiltersItemsButtons = document.querySelectorAll("div > menu > li >menu >li >button"); 
   //console.log("arrayFromMainInput : ", arrayFromMainInput);
   //console.log("mainInputFilled plein? : ", mainInputFilled);
+
   const advancedFiltersInput = document.querySelectorAll("div > menu > li > button > input"); 
   advancedFiltersInput.forEach( input => {
     input.addEventListener('input', (event) =>{
@@ -205,22 +161,18 @@ function search(){
           selectedTagContainer.innerHTML=""
           tagsMap.forEach((itemTittL, ItM) => displayTag(ItM,itemTittL))
           document.getElementById(`search-${itemTittleList}`).value="" // vide l'input
-          //e.target.remove() // ça marche mais, au click la liste est actualisée avec les éléments des recettes filtrées
-          let target = e.target
 
-          if (tagsMap.size===0){
-            // il n'y a pas de tag sélectionné
-            ;
-            displayRecipes(recipes)
-            filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
-            ;
-          }else if (tagsMap.size===1){
-            
+          // if (tagsMap.size===0){
+          //   // il n'y a pas de tag sélectionné
+          //   displayRecipes(recipes)
+          //   filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
+          // }else 
+          if (tagsMap.size===1){
             //tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
             tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedField(item, recipes, itemTittleList)))
-            tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList), target))
+            tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList)))
             suppressItemsClickedFromButtonsBlock(tagsMap)
-          
+
           }else if (tagsMap.size>1){
             // s'il y a plus de deux tags sélectionnés
             // je MAP mes tags (du coup les doublons ne sont pas pris en compte)
@@ -237,6 +189,7 @@ function search(){
             displayRecipes(intersection2(mixedtest2))
             filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(mixedtest2))
             suppressItemsClickedFromButtonsBlock(tagsMap)
+
           }
         }
       }
@@ -257,16 +210,18 @@ function search(){
             tagsMap.forEach((itemTittL, ItM) => displayTag(ItM,itemTittL))
             document.getElementById(`search-${itemListTittle}`).value="" // vide l'input
 
-            if (tagsMap.size===0){
-              displayRecipes(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
-              filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
+            // if (tagsMap.size===0){
+            //   displayRecipes(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
+            //   filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
 
-            }else if (tagsMap.size===1){
+            // }else 
+            if (tagsMap.size===1){
             // il y a un tag sélectionné
               displayRecipes(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
               filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(itemName, arrayFromMainInput, itemListTittle))
               suppressItemsClickedFromButtonsBlock(tagsMap)
 
+              
             }else if (tagsMap.size>1){
             // s'il y a plus de deux tags sélectionnés
               let mixedtest2=[]
@@ -286,7 +241,7 @@ function search(){
     window.addEventListener('click', () => {
       foldDropdown(advancedFiltersLi)
     })
-
+    // si on supprime des tags, filtrer les tableaux
     window.addEventListener('click', (e)=> { 
       //console.log(e.target.className.includes("far fa-times-circle"));
       if (e.target.className.includes("far fa-times-circle")){
@@ -338,12 +293,10 @@ function search(){
 
             }
         }
+      
       }
   })
 }
 
 search()
-
-
-
 

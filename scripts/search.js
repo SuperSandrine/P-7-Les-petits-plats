@@ -143,6 +143,7 @@ function search(){
       displayRecipes(recipes)
       filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes) //recipes s'il n'y a pas un autre array filtré en cours
     }
+    // si input est vide et que l'input n'a plus le focus, enlever le message data-error
   })
 
   const advancedFiltersItemsButtons = document.querySelectorAll("div > menu > li >menu >li >button"); 
@@ -267,9 +268,8 @@ function search(){
     window.addEventListener('click', () => {
       foldDropdown(advancedFiltersLi)
     })
-    // si on supprime des tags, filtrer les tableaux
+    // si on supprime des tags, filtrer les tableaux à nouveau avec les tags restants
     window.addEventListener('click', (e)=> { 
-      //console.log(e.target.className.includes("far fa-times-circle"));
       if (e.target.className.includes("far fa-times-circle")){
       //alors supprime le tag
       suppressTag(e)

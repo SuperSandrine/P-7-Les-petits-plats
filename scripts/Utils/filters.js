@@ -1,5 +1,3 @@
-
-
 // pour les suites de caractères, supprimer espaces et mettre en case minuscule
 const refit = (x => x.trim().toLowerCase())
 
@@ -10,38 +8,67 @@ export function filterThroughMainInput(e, array){
     const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some( ing => refit(ing.ingredient).includes(refit(e.target.value))))
     let mixedfilteredArrayFromSearchBar = [...filteredArrayDescription,...filteredArrayName, ...filteredArrayIngredients]
     const setOfMainSearchInput = [...new Set(mixedfilteredArrayFromSearchBar)]
-    console.log("ensemble des results de mainInput : ", setOfMainSearchInput) 
+    //console.log("ensemble des results de mainInput : ", setOfMainSearchInput) 
     return setOfMainSearchInput
 }
 
 // renvoie une liste de recettes filtrés en de event (e.tagert.value)
+// avec INCLUDES
+// export function loopThroughMainInput(e, array){
+//     let mixedShortenedArray=[]
+//     for (let i = 0; i < array.length; i++) {
+//         if (refit(array[i].description).includes(refit(e.target.value))===true){
+//             if (!mixedShortenedArray.includes(array[i])){
+//             mixedShortenedArray.push(array[i])
+//         }
+//     }
+//         else if (refit(array[i].name).includes(refit(e.target.value))===true){
+//             if (!mixedShortenedArray.includes(array[i])){
+//                 mixedShortenedArray.push(array[i])
+//             }
+//         }
+//         for (let j = 0; j < array[i].ingredients.length; j++){
+//             if(refit(array[i].ingredients[j].ingredient).includes(refit(e.target.value))===true){
+//                 if (!mixedShortenedArray.includes(array[i])){
+//                     mixedShortenedArray.push(array[i])
+//                 }
+//             }
+//         }
+//     }
+//     console.log("mixed test", mixedShortenedArray);
+//     return mixedShortenedArray
+// }
+
+// pas d'utilisation de .includes ci-après
+// avec la valeur de l'input et le tableau de recettes filtrés ou non
+// la fonction cherche sir la e.target.value a un index dans la string définit
+// si oui (soit si !==-1) alors elle ajoute la recette au tableau mixedShortenedArray
+// avec le même principe elle vérifie que la recette qu'on pousse dans le tableau n'y est pas déjà
+// qu'elle renvoie
+
+// renvoie une liste de recettes filtrés avec event ou e (e.target.value)
+// avec INDEXOF
 export function loopThroughMainInput(e, array){
     let mixedShortenedArray=[]
-
+    let searchedDescription, searchedName, searchedIngredient
     for (let i = 0; i < array.length; i++) {
-        if (refit(array[i].description).includes(refit(e.target.value))===true){
-            if (!mixedShortenedArray.includes(array[i])){
+        searchedDescription = refit(array[i].description).indexOf(refit(e.target.value))
+        searchedName = refit(array[i].name).indexOf(refit(e.target.value))
+        if (searchedDescription!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
+            mixedShortenedArray.push(array[i])
+        } if (searchedName!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
             mixedShortenedArray.push(array[i])
         }
-    }
-        else if (refit(array[i].name).includes(refit(e.target.value))===true){
-            if (!mixedShortenedArray.includes(array[i])){
+        for (let j = 0; j < array[i].ingredients.length; j++){
+            searchedIngredient = refit(array[i].ingredients[j].ingredient).indexOf(refit(e.target.value))
+            if (searchedIngredient !== -1 && mixedShortenedArray.indexOf(array[i]) == -1){
                 mixedShortenedArray.push(array[i])
             }
         }
-        for (let j = 0; j < array[i].ingredients.length; j++){
-            if(refit(array[i].ingredients[j].ingredient).includes(refit(e.target.value))===true){
-                if (!mixedShortenedArray.includes(array[i])){
-                    mixedShortenedArray.push(array[i])
-                }
-            }
-        }
     }
-    console.log("mixed test", mixedShortenedArray);
+    //console.log("mixed test", mixedShortenedArray);
     return mixedShortenedArray
 }
-
-
 
 // du tableau de liste, 
 // recherche une suite de caractère venant d'un input dit valeur (e.target.value) 

@@ -99,7 +99,7 @@ function search(){
 
   mainInput.addEventListener('input', (event) =>{
     event.stopPropagation()
-    console.log("main input event", event)
+    console.log("main input event", event.target.value)
     selectedTagContainer.innerHTML=""
     tagsMap.clear()
     if (event.target.value.length > 2){
@@ -161,11 +161,12 @@ function search(){
           tagsMap.forEach((itemTittL, ItM) => displayTag(ItM,itemTittL))
           document.getElementById(`search-${itemTittleList}`).value="" // vide l'input
 
-          if (tagsMap.size===0){
-            // il n'y a pas de tag sélectionné
-            displayRecipes(recipes)
-            filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
-          }else if (tagsMap.size===1){
+          // if (tagsMap.size===0){
+          //   // il n'y a pas de tag sélectionné
+          //   displayRecipes(recipes)
+          //   filteredListsAdvancedField = displayItemsInButtonsBlocks(recipes)
+          // }else 
+          if (tagsMap.size===1){
             //tagsMap.forEach((a,b)=> console.log(a, b)); // ingredient, lait de coco
             tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedField(item, recipes, itemTittleList)))
             tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList)))

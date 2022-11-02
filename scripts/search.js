@@ -55,13 +55,41 @@ function displayItemsInButtonsBlocks(array){
   return advancedFiltersLists
 }
 
+// si un item est présent dans les tags
+// alors le supprimer des listes
+function suppressItemsClickedFromButtonsBlock(tagsList){
+  if (tagsList.size ===1){
+    let itemToSuppress 
+    for (const key of tagsList.keys()) {
+      itemToSuppress = key
+    }
+    const displayedList= document.querySelectorAll("div > menu > li > menu > li > button")
+    for (const button of displayedList) {
+      if (button.innerText.includes(itemToSuppress)) {
+        button.remove()
+      }
+    }
+  }
+  else if (tagsList.size >1){
+    // tagsList.forEach((ListTittle,Item) => console.log("ListTittle/Item",ListTittle + "/"+ Item))   // renvoie : ListTittle/Item ingredients/lait de coco
+    const displayedList= document.querySelectorAll("div > menu > li > menu > li > button")
+    tagsList.forEach((ListTittle,Item) => {
+    for (const button of displayedList) {
+      if (button.innerText.includes(Item)) {
+        button.remove()
+      }
+    }})
+  }
+}
+
+// affiche le tag cliqué
 function displayTag(item, itemTittleList){
   //console.log("tag displayed : ",item)
   selectedTagContainer.appendChild(createAListFactory().getItemTagTemplate(item, itemTittleList))
   return
 }
 
-// supprime de l'affichage le tag clické
+// supprime de l'affichage le tag cliqué
 function suppressTag(e){
   //console.log(e.target.parentNode.parentNode);
   selectedTagContainer.removeChild(e.target.parentNode.parentNode)
@@ -161,7 +189,6 @@ function search(){
           selectedTagContainer.innerHTML=""
           tagsMap.forEach((itemTittL, ItM) => displayTag(ItM,itemTittL))
           document.getElementById(`search-${itemTittleList}`).value="" // vide l'input
-
           // if (tagsMap.size===0){
           //   // il n'y a pas de tag sélectionné
           //   displayRecipes(recipes)
@@ -172,7 +199,6 @@ function search(){
             tagsMap.forEach((itemTittleList, item) => displayRecipes(filterThroughAdvancedField(item, recipes, itemTittleList)))
             tagsMap.forEach((itemTittleList, item) => filteredListsAdvancedField = displayItemsInButtonsBlocks(filterThroughAdvancedField(item, recipes, itemTittleList)))
             suppressItemsClickedFromButtonsBlock(tagsMap)
-
           }else if (tagsMap.size>1){
             // s'il y a plus de deux tags sélectionnés
             // je MAP mes tags (du coup les doublons ne sont pas pris en compte)

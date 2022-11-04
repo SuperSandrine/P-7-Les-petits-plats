@@ -1,21 +1,22 @@
 
-export function createARecipeFactory (recipeDatas){
-  const { id, name, ingredients , time, description, appliance, ustensils} = recipeDatas
-  let createRecipeIngredientsList=[]
+export function createARecipeFactory (recipeDatas) {
+  const { name, ingredients, time, description } = recipeDatas
+  const createRecipeIngredientsList = []
 
-  // For/in loops throught properties of an object 
-  for ( let x in ingredients){
+  // For/in  boucles dans les propriétés d'un objet
+  for (const x in ingredients) {
     const ingre = ingredients[x].ingredient
-    const quant = ingredients[x].quantity ===undefined ? " " : " : " + ingredients[x].quantity;
-    const uni = ingredients[x].unit ===undefined ? " " : ingredients[x].unit;
-    createRecipeIngredientsList.push(`<li><strong>${ingre}</strong> ${quant} ${uni}</li>`)    
+    const quant = ingredients[x].quantity === undefined ? ' ' : ' : ' + ingredients[x].quantity
+    const uni = ingredients[x].unit === undefined ? ' ' : ingredients[x].unit
+    createRecipeIngredientsList.push(`<li><strong>${ingre}</strong> ${quant} ${uni}</li>`)
   }
-  
-  function getRecipeCard(){
-    const fillUpRecipeWithIngredients = createRecipeIngredientsList.join(" ")
+
+  // fabrique l'élément 'carte' d'affichage des recettes
+  function getRecipeCard () {
+    const fillUpRecipeWithIngredients = createRecipeIngredientsList.join(' ')
     const article = document.createElement('article')
-      article.setAttribute('class', 'recipe-card')
-      article.innerHTML=`
+    article.setAttribute('class', 'recipe-card')
+    article.innerHTML = `
       <div class="img"></div>
       <div class="recipeText-container">
           <div class="recipeText-header">
@@ -32,12 +33,9 @@ export function createARecipeFactory (recipeDatas){
           </div>
         </div>`
 
-        // recipesContainer.appendChild(article) // ligne ajouté dans le Display
-        return article
+    return article
   }
-  return{ 
-      getRecipeCard
+  return {
+    getRecipeCard
   }
 }
-
-

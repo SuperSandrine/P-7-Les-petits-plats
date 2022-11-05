@@ -40,7 +40,7 @@
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table des matières</summary>
-  <ol>
+  
     <li><a href="#P7-:-Les-Petits-Plats"> P7 : Les Petits Plats</a>
     <ul>
       <li><a href="#Résultat">Résultat</a></li>
@@ -55,7 +55,7 @@
       <li><a href="#Built-With">Built With</a></li>
     </ul>
     </li>
-  </ol>
+  
 </details>
 
 <!-- ABOUT THE PROJECT -->
@@ -70,6 +70,7 @@
 
 Vous êtes missionnés par l’entreprise “Les petits plats” en temps que Développeur Front-end.
 L'entreprise, éditrice de livre de cuisine, veut réaliser son propre site de recettes de cuisine à l’instar de Marmiton ou 750g.
+
 La différenciation de ce produit est basée sur la fluidité du moteur de recherche.
 
 Votre première mission sera donc d’implémenter la fonctionnalité de recherche, avec comme ressource :
@@ -134,7 +135,7 @@ En complément les règles de gestion sont également à suivre:
 
 - GitHub
 - VSCode
-- DrawIo [drawIo-url]
+- DrawIo [![drawIo-url]]
 - Figma
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

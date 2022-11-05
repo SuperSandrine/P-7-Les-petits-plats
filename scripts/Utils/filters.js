@@ -56,7 +56,8 @@ export function loopThroughMainInput(e, array){
         searchedName = refit(array[i].name).indexOf(refit(e.target.value))
         if (searchedDescription!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
             mixedShortenedArray.push(array[i])
-        } if (searchedName!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
+        } 
+        if (searchedName!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
             mixedShortenedArray.push(array[i])
         }
         for (let j = 0; j < array[i].ingredients.length; j++){
@@ -92,34 +93,34 @@ export function loopThroughMainInput(e, array){
 //     return false;
 // }
 
-export function loopThroughMainInput(e, array){
-    let mixedShortenedArray=[]
-    let searchedDescription2, searchedName, searchedIngredient
-    for (let i = 0; i < array.length; i++) {
-        //searchedDescription = refit(array[i].description).indexOf(refit(e.target.value))
-        //console.log("searchDescrip", searchedDescription);
-        console.log("descrip",typeof(array[i].description)); // str
-        console.log("descrip",typeof(e.target.value)); // str
+// export function loopThroughMainInput(e, array){
+//     let mixedShortenedArray=[]
+//     let searchedDescription2, searchedName, searchedIngredient
+//     for (let i = 0; i < array.length; i++) {
+//         //searchedDescription = refit(array[i].description).indexOf(refit(e.target.value))
+//         //console.log("searchDescrip", searchedDescription);
+//         console.log("descrip",typeof(array[i].description)); // str
+//         console.log("descrip",typeof(e.target.value)); // str
 
-        searchedDescription2 = stringSearched((refit(e.target.value)),(refit(array[i].description)))
-        console.log("searchDescrip 2", searchedDescription2);
+//         searchedDescription2 = stringSearched((refit(e.target.value)),(refit(array[i].description)))
+//         console.log("searchDescrip 2", searchedDescription2);
 
-        //searchedName = refit(array[i].name).indexOf(refit(e.target.value))
-        if (searchedDescription2!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
-            mixedShortenedArray.push(array[i])
-        } if (searchedName!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
-            mixedShortenedArray.push(array[i])
-        }
-        for (let j = 0; j < array[i].ingredients.length; j++){
-            searchedIngredient = refit(array[i].ingredients[j].ingredient).indexOf(refit(e.target.value))
-            if (searchedIngredient !== -1 && mixedShortenedArray.indexOf(array[i]) == -1){
-                mixedShortenedArray.push(array[i])
-            }
-        }
-    }
-    console.log("mixed test", mixedShortenedArray);
-    return mixedShortenedArray
-}
+//         //searchedName = refit(array[i].name).indexOf(refit(e.target.value))
+//         if (searchedDescription2!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
+//             mixedShortenedArray.push(array[i])
+//         } if (searchedName!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
+//             mixedShortenedArray.push(array[i])
+//         }
+//         for (let j = 0; j < array[i].ingredients.length; j++){
+//             searchedIngredient = refit(array[i].ingredients[j].ingredient).indexOf(refit(e.target.value))
+//             if (searchedIngredient !== -1 && mixedShortenedArray.indexOf(array[i]) == -1){
+//                 mixedShortenedArray.push(array[i])
+//             }
+//         }
+//     }
+//     console.log("mixed test", mixedShortenedArray);
+//     return mixedShortenedArray
+// }
 
 
 

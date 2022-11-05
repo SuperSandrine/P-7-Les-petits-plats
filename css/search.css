@@ -185,6 +185,8 @@ div > menu > li > menu {
   width: 100%;
   top: 65px;
   visibility: hidden;
+  max-height: 287px;
+  overflow-y: scroll;
 }
 div > menu > li.active > menu {
   visibility: visible;

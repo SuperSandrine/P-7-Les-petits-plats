@@ -41,7 +41,7 @@ export function filterThroughMainInput(e, array){
 
 // pas d'utilisation de .includes ci-après
 // avec la valeur de l'input et le tableau de recettes filtrés ou non
-// la fonction cherche sir la e.target.value a un index dans la string définit
+// la fonction cherche sur la e.target.value a un index dans la string définit
 // si oui (soit si !==-1) alors elle ajoute la recette au tableau mixedShortenedArray
 // avec le même principe elle vérifie que la recette qu'on pousse dans le tableau n'y est pas déjà
 // qu'elle renvoie
@@ -70,63 +70,6 @@ export function loopThroughMainInput(e, array){
     //console.log("mixed test", mixedShortenedArray);
     return mixedShortenedArray
 }
-
-// renvoie une liste de recettes filtrés avec event ou e (e.target.value)
-// sans INDEXOF
-// function stringSearched (searchedString, referalString){
-//     let match=-1
-//     for(let i=0;i<referalString.length; i++)
-//     if(referalString[i]===searchedString[0]){
-// //        console.log("textLong",referalString[i])
-//   //      console.log("textcourt",searchedString.length)
-//         for( let k=0;k<searchedString.length;k++){
-//             if(searchedString[k]===referalString[i+k]){
-//     //            console.log("épellation",referalString[i+k]);
-//                 match++
-//             }
-//         //console.log("match",match);
-//         }
-//     }
-//     if (match ===searchedString.length){
-//         return true
-//     }
-//     return false;
-// }
-
-// export function loopThroughMainInput(e, array){
-//     let mixedShortenedArray=[]
-//     let searchedDescription2, searchedName, searchedIngredient
-//     for (let i = 0; i < array.length; i++) {
-//         //searchedDescription = refit(array[i].description).indexOf(refit(e.target.value))
-//         //console.log("searchDescrip", searchedDescription);
-//         console.log("descrip",typeof(array[i].description)); // str
-//         console.log("descrip",typeof(e.target.value)); // str
-
-//         searchedDescription2 = stringSearched((refit(e.target.value)),(refit(array[i].description)))
-//         console.log("searchDescrip 2", searchedDescription2);
-
-//         //searchedName = refit(array[i].name).indexOf(refit(e.target.value))
-//         if (searchedDescription2!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
-//             mixedShortenedArray.push(array[i])
-//         } if (searchedName!== -1 && mixedShortenedArray.indexOf(array[i])== -1) {
-//             mixedShortenedArray.push(array[i])
-//         }
-//         for (let j = 0; j < array[i].ingredients.length; j++){
-//             searchedIngredient = refit(array[i].ingredients[j].ingredient).indexOf(refit(e.target.value))
-//             if (searchedIngredient !== -1 && mixedShortenedArray.indexOf(array[i]) == -1){
-//                 mixedShortenedArray.push(array[i])
-//             }
-//         }
-//     }
-//     console.log("mixed test", mixedShortenedArray);
-//     return mixedShortenedArray
-// }
-
-
-
-
-
-
 
 // du tableau de liste, 
 // recherche une suite de caractère venant d'un input dit valeur (e.target.value) 

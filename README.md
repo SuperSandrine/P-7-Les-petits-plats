@@ -46,7 +46,7 @@ La différenciation de ce produit est basée sur la fluidité du moteur de reche
 Votre première mission sera donc d’implémenter la fonctionnalité de recherche, avec comme ressource :
 
 - <a href="https://www.figma.com/file/xqeE1ZKlHUWi2Efo8r73NK/UI-Design-Les-Petits-Plats-FR?node-id=1%3A2">Les maquettes sur Figma</a>
-- <a href="./readmeAssets/Cas+d’utilisation+Filtrer+les+recettes+dans+l’interface+utilisateur.pdf">La descrtiption du cas d'utilisation de recherche</a>
+- <a href="./readmeAssets/Cas+d’utilisation+Filtrer+les+recettes+dans+l’interface+utilisateur.pdf">La description du cas d'utilisation de recherche</a>
 - <a href="./data/recipes.js">Un fichier contenant une base de 50 recettes</a>
 
 <img src="readmeAssets/maquette.png" alt="apperçu de la maquette">
@@ -75,7 +75,7 @@ Les champs de recherches avancées, va chercher par mots-clefs sélectionnés le
 - Implémenter l'interface, avec un code qui passe le validateur de W3C
 
 - L'algorithmique en 3 étapes:
-  - Planifier les 2 versions de la fonctionalité du champs de recherche principal(en boucles natives et l'autre en code fonctionnel), remplir une fiche d'investigation, avec algorigramme
+  - Planifier les 2 versions de la fonctionalité du champs de recherche principal(en boucles natives et l'autre en code fonctionnel), <a href="./readmeAssets/ficheInvestigation.pdf"> remplir une fiche d'investigation, avec algorigramme</a>.
   - Implémenter ces 2 versions sur 2 branches : branche master et branche NativeLoops
   - Tester les performances des 2 versions sur jsben.ch : <a href="https://jsben.ch/gUW10">voici le lien de ce test.</a>
 

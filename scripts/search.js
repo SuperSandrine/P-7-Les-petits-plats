@@ -13,10 +13,7 @@ const selectedTagContainer = document.getElementById('advancedSelectedFilterTags
 const tagsMap = new Map()
 let mainInputFilled = false
 
-console.log(recipes)
-
 // ----------------- Fonctions
-
 // affiche les recettes une par une à partir d'un array de recettes filtré ou non
 function displayRecipes (array) {
   recipesContainer.innerHTML = ''
@@ -41,7 +38,7 @@ function displayListButtons (array) {
 // on récupère la liste d'items filtrés pour ajouter des filtres sur cette liste
 function displayItemsInButtonsBlocks (array) {
   const advancedFiltersLists = createAListFactory().makeLists(array)
-  console.log('advancedFiltersLists : ', advancedFiltersLists)
+  // console.log('advancedFiltersLists : ', advancedFiltersLists)
   for (const title in advancedFiltersLists) {
     // console.log("title", title)
     const menuBlock = document.querySelector(`menu #${title}-list`)

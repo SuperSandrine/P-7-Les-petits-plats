@@ -8,7 +8,6 @@ export function filterThroughMainInput (e, array) {
   const filteredArrayIngredients = array.filter(recipe => recipe.ingredients.some(ing => refit(ing.ingredient).includes(refit(e.target.value))))
   const setOfMainSearchInput = [...new Set([...filteredArrayDescription, ...filteredArrayName, ...filteredArrayIngredients])]
   // console.log("ensemble des results de mainInput : ", setOfMainSearchInput)
-  console.log("e",e);
   return setOfMainSearchInput
 }
 

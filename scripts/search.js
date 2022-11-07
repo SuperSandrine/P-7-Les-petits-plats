@@ -1,7 +1,7 @@
 import { recipes } from '../data/recipes.js'
 import { createAListFactory, createList } from './Factories/listFactories.js'
 import { createARecipeFactory } from './Factories/recipefactories.js'
-import { filterThroughMainInput, filterThroughAdvancedField, filterAdvancedItemsListThroughAdvancedInput, intersection2 } from './Utils/filters.js'
+import { filterThroughMainInput, filterThroughAdvancedField, filterAdvancedItemsListThroughAdvancedInput, intersection } from './Utils/filters.js'
 import { foldDropdown, unfoldAndFoldDropdown } from './Utils/dropdown.js'
 
 // ----------------- DOM
@@ -156,7 +156,7 @@ function search () {
             // s'il y a plus de deux tags sélectionnés
             // je MAP mes tags (du coup les doublons ne sont pas pris en compte)
             // à chaque clic sur tag, une liste de recette est crée et ajouté à l'array multipleTagsArray.
-            // TODO: changer nom de multipleTagsArray et intersection2
+            // TODO: changer nom de multipleTagsArray et intersection
             const multipleTagsArray = []
             for (const [key, value] of tagsMap) {
               multipleTagsArray.push(filterThroughAdvancedField(key, recipes, value))
@@ -164,8 +164,8 @@ function search () {
             // console.log("à partir de 2 tags, le tableau créé: ", multipleTagsArray);
             // l'array multipleTagsArray se composent d'un index par tag
             // dans chaque index il y a un tableau des résultats du filtre sur le tableau de recettes (filtré ou non par le mainInput)
-            displayRecipes(intersection2(multipleTagsArray))
-            filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(multipleTagsArray))
+            displayRecipes(intersection(multipleTagsArray))
+            filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection(multipleTagsArray))
           }
         }
       } else if (mainInputFilled === true) {
@@ -191,8 +191,8 @@ function search () {
             for (const [key, value] of tagsMap) {
               multipleTagsArray.push(filterThroughAdvancedField(key, arrayFromMainInput, value))
             }
-            displayRecipes(intersection2(multipleTagsArray))
-            filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(multipleTagsArray))
+            displayRecipes(intersection(multipleTagsArray))
+            filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection(multipleTagsArray))
           }
         }
       }
@@ -219,8 +219,8 @@ function search () {
           for (const [key, value] of tagsMap) {
             multipleTagsArray.push(filterThroughAdvancedField(key, recipes, value))
           }
-          displayRecipes(intersection2(multipleTagsArray))
-          filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(multipleTagsArray))
+          displayRecipes(intersection(multipleTagsArray))
+          filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection(multipleTagsArray))
         }
       } else if (mainInputFilled === true) {
         if (tagsMap.size === 0) {
@@ -235,8 +235,8 @@ function search () {
           for (const [key, value] of tagsMap) {
             multipleTagsArray.push(filterThroughAdvancedField(key, arrayFromMainInput, value))
           }
-          displayRecipes(intersection2(multipleTagsArray))
-          filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection2(multipleTagsArray))
+          displayRecipes(intersection(multipleTagsArray))
+          filteredListsAdvancedField = displayItemsInButtonsBlocks(intersection(multipleTagsArray))
         }
       }
     }

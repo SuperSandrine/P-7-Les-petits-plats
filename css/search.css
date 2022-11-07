@@ -301,7 +301,7 @@ div > menu > li.active > button:after {
 }
 .recipeText-listAndDescription ul {
   width: 45%;
-  white-space: wrap;
+  white-space: normal;
 }
 .recipeText-listAndDescription ul strong {
   font-weight: 700;

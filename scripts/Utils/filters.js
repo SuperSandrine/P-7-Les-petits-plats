@@ -49,7 +49,7 @@ export function filterThroughAdvancedField (valeur, array, tittle) {
 //  Dans un tableau de tableaux filtrés,(au moins 2 index)
 //  cette fonction va vérifier l'intersection entre chaque index (chaque index contient un tableau)
 //  et la renvoyer (tableau de recettes filtrées sur intersection)
-export function intersection2 (array) {
+export function intersection (array) {
   // initialisation de l'intersection sur l'array[0]
   let intersectionArray = array[0]
   // pour chaque index, je compare l'index suivant avec le premier index,
